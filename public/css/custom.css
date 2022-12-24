@@ -1,0 +1,164 @@
+:root {
+  --primary: #3ab2ab !important;
+  --primary-dark: #2d918b;
+  --primary-darker: #24726d;
+  --primary: #dd2222;
+  --primary-color: #fff;
+  --secondary: #dd2222;
+  --secondary-dark: #cc1111;
+  --secondary-darker: #bb0000;
+  --border: #c5c5c5;
+  --alt: #fff;
+}
+
+.items_grid {
+    margin-top: 2em;
+    display: grid;
+    grid-gap: 1em;
+    grid-template-columns: repeat(4, 1fr);
+    max-width: 1000px;
+}
+
+.items_grid .card {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.items_grid .website_name {
+    font-weight: bold;
+}
+
+.items_grid .website_name, .items_grid .website_name a {
+    text-decoration: none;
+}
+
+.items_grid .website_name, .items_grid .website_name a:hover {
+    color: #cc1111;
+}
+
+.items_grid .website_username {
+    margin-top: 3px;
+    font-size: 0.84em;
+}
+
+.items_grid > div > div > div:nth-child(1) > img {
+    cursor: pointer;
+}
+
+#add_btn {
+    bottom: 1em;
+    right: 1em;
+    position: fixed;
+}
+
+#add_btn button {
+    border-radius: 50%;
+    padding: 9px 14px 7px 14px;
+    font-size: 27px;
+    background-color: var(--primary);
+    border: 1px var(--primary) solid;
+}
+
+#add_btn button:hover {
+    background-color: var(--primary-dark);
+    border: 1px var(--primary-dark) solid;
+}
+
+.modal-heading {
+    background-color: var(--primary-dark);
+    border: 1px var(--primary-dark) solid;
+}
+
+.modal-body .text-right {
+    text-align: right;
+}
+
+#generate_pass {
+    float: right;
+    position: relative;
+    cursor: pointer;
+}
+
+.container-md {
+    width: 96%;
+    max-width: 840px;
+}
+
+#left-nav > ul > li > a:hover {
+    color: #fff;
+}
+
+.default_icon {
+    background-color: navy;
+    max-width: 100%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    color: #eee;
+    font-size: 33px;
+    margin-bottom: 7px;
+}
+
+.dummy-card {
+    width: 96%;
+    margin: 0 auto 21px auto;
+    max-width: 238px;
+}
+
+#more_item_info > div.modal-body > p.text-right > a > i {
+    top: 2px;
+    position: relative;
+}
+
+#more_item_info > div.modal-body > p a {
+    color: steelblue;
+    text-decoration: none;
+}
+
+.sm {
+    font-size: 12px;
+}
+
+.temp-info {
+    margin-bottom: 45px !important;
+}
+
+.two-way-split {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.two-way-split .fa-times {
+    cursor: pointer;
+}
+
+a {
+    color: var(--primary-dark);
+}
+
+a:hover {
+    color: var(--primary-darker) !important;
+}
+
+.danger {
+    background-color: var(--secondary);
+    border: 1px var(--secondary-dark) solid;
+}
+
+.danger:hover {
+    background-color: var(--secondary-darker);
+    border: 1px var(--secondary-darker) solid;
+}
+
+.reveal {
+    background-color: #555;
+}
+
+.transition-to-clear {
+  background-color: white;
+  transition: background-color .6s linear;
+}
