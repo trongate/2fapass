@@ -4,11 +4,20 @@
   --primary-darker: #9c0606;
   --primary: #dd2222;
   --primary-color: #fff;
-  --secondary: #dd2222;
-  --secondary-dark: #cc1111;
-  --secondary-darker: #bb0000;
+  --secondary: #2e7ed1;
+  --secondary-dark: #245b96;
+  --secondary-darker: #1d4673;
   --border: #c5c5c5;
   --alt: #fff;
+}
+
+.logo-font {
+    font-family: 'Helvetica', 'Arial', sans-serif !important;
+    font-weight: bold;
+}
+
+.logo a:hover {
+    color: #fff !important;
 }
 
 .items_grid {
@@ -66,8 +75,22 @@
 }
 
 .modal-heading {
-    background-color: var(--primary-dark);
-    border: 1px var(--primary-dark) solid;
+    background-color: var(--primary);
+    border: 1px var(--primary) solid;
+    text-transform: none;
+}
+
+.modal#add_item {
+    max-width: 850px;
+}
+
+.modal#create_password {
+    max-width: 800px;
+}
+
+#add_item > div.modal-heading.two-way-split > div:nth-child(1) {
+    font-size: 16px;
+    font-weight: bold;
 }
 
 .modal-body .text-right {
@@ -133,6 +156,22 @@
     justify-content: space-between;
 }
 
+.two-way-split > div:nth-child(2) {
+    text-align: center;
+    font-size: 24px;
+}
+.two-way-split > div:nth-child(3) {
+    text-align: right;
+}
+
+.two-way-split > div:nth-child(odd) {
+    width: 30%;
+}
+
+.two-way-split > div:nth-child(even) {
+    width: 40%;
+}
+
 .two-way-split .fa-times {
     cursor: pointer;
 }
@@ -167,3 +206,54 @@ a:hover {
 #slide-nav a:hover, #left-nav a:hover {
   color: #fff !important;
 }
+
+.you-raise-me-up {
+    top: -.2em;
+    position: relative;
+    letter-spacing: 3px;
+    margin-left: .3em;
+    font-size: 27px;
+}
+
+.modal-body-grid {
+    display: grid;
+    grid-gap: 1.6em;
+    grid-template-columns: repeat(4, 1fr);
+    margin-top: 1em;
+    margin-bottom: 3em;
+}
+
+.modal-body-grid > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    min-height: 90px;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.modal-body-grid > div > div,
+.modal-body-grid > div .fa {
+    transition: .3s;
+}
+
+.modal-body-grid > div:hover .fa {
+    color: #56879f;
+}
+.modal-body-grid > div:hover {
+  color: #56879f;
+}
+
+.modal-body-grid > div > div:nth-child(1) {
+    color:  #325d5d;
+}
+
+.modal-body-grid > div > div:nth-child(2) {
+    font-size: 14px;
+}
+
+.modal-body-grid > div .fa {
+    font-size: 60px;
+}
+

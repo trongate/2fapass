@@ -12,7 +12,7 @@
 </head>
 <body>
 <div class="top-gutter">
-	<div class="logo"><?= anchor('#', OUR_NAME) ?></div>
+	<div class="logo logo-font"><?= anchor('#', OUR_NAME) ?></div>
 	<div class="top-rhs">
 		<div class="hide-sm"><?= anchor('#', '<i class=\'fa fa-envelope\'></i> Enquiries (88)', array('class' => 'highlight')) ?></div>
 		<div class="hide-sm"><?= anchor('#', '<i class=\'fa fa-shopping-cart\'></i> Orders') ?></div>

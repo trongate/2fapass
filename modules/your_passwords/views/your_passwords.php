@@ -24,9 +24,45 @@
     ?>
 </div>
 
-<div class="modal" id="create_password" style="display:none">
+<div class="modal" id="add_item" style="display:none">
     <div class="modal-heading two-way-split">
-        <div><i class="fa fa-lock"></i> Create Password Record</div>
+        <div>Add Item</div>
+        <div class="logo-font"><?= OUR_NAME ?></div>
+        <div><i class="fa fa-times" onclick="closeModal()"></i></div>
+    </div>
+    <div class="modal-body">
+        <div class="modal-body-grid">
+            <div onclick="openAddItem('password')">
+                <div><i class="fa fa-lock"></i></div>
+                <div>password</div>
+            </div>
+            <div onclick="openAddItem('secure note')">
+                <div><i class="fa fa-file-text-o"></i></div>
+                <div>secure note</div>
+            </div>
+            <div onclick="openAddItem('address')">
+                <div><i class="fa fa-address-book"></i></div>
+                <div>address</div>
+            </div>
+            <div onclick="openAddItem('payment card')">
+                <div><i class="fa fa-credit-card"></i></div>
+                <div>payment card</div>
+            </div>
+            <div onclick="openAddItem('bank account')">
+                <div><i class="fa fa-bank"></i></div>
+                <div>bank account</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal" id="create_password" style="display:none">
+
+
+    <div class="modal-heading two-way-split">
+        <div><i class="fa fa-lock"></i>  Add Password</div>
+        <div class="logo-font"><?= OUR_NAME ?></div>
         <div><i class="fa fa-times" onclick="closeModal()"></i></div>
     </div>
 
@@ -119,7 +155,7 @@
 </div>
 
 <div id="add_btn">
-    <button onclick="openModal('create_password')"><i class="fa fa-plus"></i></button>
+    <button onclick="openModal('add_item')"><i class="fa fa-plus"></i></button>
 </div>
 
 <style>
@@ -260,8 +296,32 @@ function closeItemInfoModal() {
     closeModal();
 }
 
+
+function openAddItem(itemType, index=null) {
+    switch (itemType) {
+      case 'password':
+        openPasswordModal();
+        break;      
+    }
+
+}
+
+function openPasswordModal() {
+    closeModal();
+    setTimeout(() => {
+        openModal('create_password');
+    }, 160);
+}
+
 window.addEventListener('load', (ev) => {
     adjustDefaultIcons();
     listenForIconClicks();
+    
+
+
+
+
+openModal('add_item');
+
 });
 </script>
