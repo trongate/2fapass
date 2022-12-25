@@ -15,7 +15,7 @@ body.addEventListener('click', (ev) => {
 	}
 
     if (slideNav.style.zIndex>0) {
-			hamburger.style.color = '#637b8e';
+			hamburger.style.color = '#fff';
             hamburger.style.pointerEvents = 'none';
     } else {
 		hamburger.style.color = '#eee';

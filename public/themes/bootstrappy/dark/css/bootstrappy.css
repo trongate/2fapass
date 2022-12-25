@@ -13,7 +13,6 @@ body {
 }
 
 .top-gutter {
-    background-color: var(--primary);
     position: fixed;
     width: 100%;
     display: flex;
@@ -313,10 +312,6 @@ li.dropdown-area li:hover {
 
 .record-details .row > div.full-width {
     font-weight: normal;
-}
-
-button, .button {
-    transition: .6s;
 }
 
 .danger {
