@@ -1,7 +1,7 @@
 :root {
-  --primary: #3ab2ab !important;
-  --primary-dark: #2d918b;
-  --primary-darker: #24726d;
+  --primary: #d12f2e !important;
+  --primary-dark: #af0809;
+  --primary-darker: #9c0606;
   --primary: #dd2222;
   --primary-color: #fff;
   --secondary: #dd2222;
@@ -16,7 +16,7 @@
     display: grid;
     grid-gap: 1em;
     grid-template-columns: repeat(4, 1fr);
-    max-width: 1000px;
+    max-width: 1120px;
 }
 
 .items_grid .card {
@@ -30,6 +30,7 @@
 
 .items_grid .website_name, .items_grid .website_name a {
     text-decoration: none;
+    color: #465d7b;
 }
 
 .items_grid .website_name, .items_grid .website_name a:hover {
@@ -81,7 +82,7 @@
 
 .container-md {
     width: 96%;
-    max-width: 840px;
+    max-width: 1120px;
 }
 
 #left-nav > ul > li > a:hover {
@@ -161,4 +162,8 @@ a:hover {
 .transition-to-clear {
   background-color: white;
   transition: background-color .6s linear;
+}
+
+#slide-nav a:hover, #left-nav a:hover {
+  color: #fff !important;
 }
