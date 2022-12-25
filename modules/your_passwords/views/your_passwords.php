@@ -1,5 +1,8 @@
 <h1>Passwords</h1>
 <?= flashdata() ?>
+<p>
+    <button onclick="openModal('add_item')">Add New Item <i class="fa fa-plus"></i></button>
+</p>
 <div class="items_grid">
     <?php
     foreach($items as $item) {
