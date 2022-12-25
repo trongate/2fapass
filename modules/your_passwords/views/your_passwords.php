@@ -5,7 +5,23 @@
     foreach($items as $item) {
        ?>
         <div class="card">
-            <div class="card-body">
+            <div class="card-body parent">
+
+  <div class="child">
+    <div class="launch-div">
+        <div>
+            <button class="launch-btn">Launch</button>    
+        </div>
+        <div>
+            <div><button class="alt"><i class="fa fa-wrench"></i></button></div>
+            <div><button class="alt"><i class="fa fa-users"></i></button></div>
+            <div><button class="alt"><i class="fa fa-trash"></i></button></div>
+        </div>
+        
+    </div>
+  </div>
+
+
                 <div><?php
                 if ($item->pic_path !== '') {
                     echo '<img src="'.$item->pic_path.'" alt="'.$item->website_name.'">';
@@ -15,7 +31,7 @@
                 }
                 ?>
                 </div>
-                <div class="website_name"><a href="#"><?= $item->website_name ?></a></div>
+                <div class="website_name"><?= $item->website_name ?></div>
                 <div class="website_username"><?= $item->username ?></div>            
             </div>
         </div>
@@ -23,6 +39,27 @@
     }
     ?>
 </div>
+
+<style>
+.parent {
+  position: relative;
+}
+
+.child {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 99;
+  visibility: hidden;  /* The child element is initially hidden */
+}
+
+.parent:hover .child {
+  visibility: visible;  /* The child element is shown when the parent element is hovered over */
+}
+
+</style>
 
 <div class="modal" id="add_item" style="display:none">
     <div class="modal-heading two-way-split">
@@ -68,31 +105,46 @@
 
     <div class="modal-body">
         <?php
-        echo form_open('your_passwords/submit');
+        echo form_open('your_passwords/submit', array('class' => 'password-form'));
 
-        echo form_label('Website URL');
-        $attr['placeholder'] = 'Enter website URL here...';
-        echo form_input('website_url', '', $attr);
+        echo '<div>';
+        echo form_label('URL:');
+        echo form_input('website_url', '');
+        echo '</div>';
 
-        echo form_label('Website Name');
-        $attr['placeholder'] = 'Enter website name here...';
-        echo form_input('website_name', '', $attr);
+        echo '<div class="two-col">';
+            echo '<div>';
+            echo form_label('Name:');
+            echo form_input('website_name', '');
+            echo '</div>';
+            echo '<div>';
+            echo form_label('Folder:');
+            echo form_input('folder', '');
+            echo '</div>';
+        echo '</div>';
 
-        echo form_label('Username');
-        $attr['placeholder'] = 'Enter username name here...';
-        echo form_input('username', '', $attr);
+        echo '<div class="two-col">';
+            echo '<div>';
+            echo form_label('Username:');
+            echo form_input('website_name', '');
+            echo '</div>';
+            echo '<div>';
+            echo form_label('Site password:');
+            echo form_input('folder', '');
+            echo '</div>';
+        echo '</div>';
 
-        echo form_label('Site Password <span onclick="genPass()" id="generate_pass">auto-generate <i class="fa fa-refresh"></i></span>');
-        $attr['placeholder'] = 'Enter site password here...';
-        $attr['autocomplete'] = 'off';
-        $attr['id'] = 'site_password';
-        echo form_password('password', '', $attr);
+        echo '<div>';
+        echo form_label('Notes:');
+        echo form_textarea('notes', '');
+        echo '</div>';
 
-        echo '<p class="text-right">';
+    
+        echo '<p class="text-right top_divider">';
         $cancel_attr['class'] = 'button alt';
         $cancel_attr['onclick'] = 'closeModal()';
         echo form_button('cancel', 'Cancel', $cancel_attr);
-        echo form_submit('submit', 'Submit');
+        echo form_submit('submit', 'Save');
         echo '</p>';
 
         echo form_close();
@@ -313,15 +365,59 @@ function openPasswordModal() {
     }, 160);
 }
 
+function addItemBoxBtns(el) {
+
+
+    
+    // console.log(el.outerHTML);
+
+    // const launchBtnDiv = document.createElement('div');
+    // launchBtnDiv.setAttribute('id', 'launch_btn_div');
+
+    // const launchBtn = document.createElement('button');
+    // launchBtn.setAttribute('id', 'launch_btn');
+    // launchBtn.innerHTML = 'Launch';
+    // launchBtnDiv.appendChild(launchBtn);
+
+    // el.appendChild(launchBtnDiv);
+
+    // const itemImg = document.querySelector('body > div.wrapper > div.center-stage > div.items_grid > div:nth-child(1) > div > div:nth-child(1) > img');
+
+    // const itemImgShape = itemImg.getBoundingClientRect();
+
+}
+
+function removeLaunchBtnEls() {
+   // launch_btn_div.remove();
+}
+
+function listenForItemClicks() {
+    const itemBoxes = document.querySelectorAll('body > div.wrapper > div.center-stage > div.items_grid > div > div');
+    for (var i = 0; i < itemBoxes.length; i++) {
+        itemBoxes[i].addEventListener('mouseover', function() {
+          addItemBoxBtns(this);
+        });
+    }
+
+    for (var i = 0; i < itemBoxes.length; i++) {
+        itemBoxes[i].addEventListener('mouseout', function() {
+          removeLaunchBtnEls();
+        });
+    }
+
+}
+
 window.addEventListener('load', (ev) => {
     adjustDefaultIcons();
     listenForIconClicks();
-    
+    listenForItemClicks();
+     
 
 
 
-
-openModal('add_item');
-
+// openModal('add_item');
+//     setTimeout(() => {
+//         openPasswordModal();
+//     }, 400);
 });
 </script>

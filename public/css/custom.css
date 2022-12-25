@@ -35,24 +35,17 @@
 
 .items_grid .website_name {
     font-weight: bold;
+    color: #325d5d;
 }
 
-.items_grid .website_name, .items_grid .website_name a {
+.items_grid .website_name, .items_grid .website_name {
     text-decoration: none;
     color: #465d7b;
-}
-
-.items_grid .website_name, .items_grid .website_name a:hover {
-    color: #cc1111;
 }
 
 .items_grid .website_username {
     margin-top: 3px;
     font-size: 0.84em;
-}
-
-.items_grid > div > div > div:nth-child(1) > img {
-    cursor: pointer;
 }
 
 #add_btn {
@@ -257,3 +250,98 @@ a:hover {
     font-size: 60px;
 }
 
+.modal-body {
+    background-color: #e3a8a811;
+}
+
+.password-form {
+    font-size: .84em;
+}
+
+label {
+    font-size: 1.1em;
+    color: #000;
+    font-weight: 500;
+}
+
+input[type=text], textarea {
+    border-radius: 0;
+}
+
+button.button.alt {
+    background-color: #fff;
+}
+
+#create_password > div.modal-body > form > p > button {
+    min-width: 12em;
+}
+
+.top_divider {
+    margin-top: 33px;
+}
+
+.child {
+    width: 70%;
+}
+
+.launch-div {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.launch-div > div:nth-child(1) {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 70%;
+    margin: 0 auto;
+}
+
+.launch-div > div:nth-child(2) {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    padding-bottom: 1em;
+    padding-right: 1em;
+    font-size: 0.7em;
+}
+
+.launch-div > div:nth-child(2) button {
+    margin-top: 0;
+    border-radius: 0;
+    border: 1px #d5d9dc solid;
+    background-color: #fff;
+}
+
+.launch-div > div:nth-child(2) button:hover {
+    background-color: #d5d9dc;
+    color: #4d5e6e;
+    border:  1px #4d5e6e solid;
+}
+
+.launch-btn {
+    margin-top: 0;
+    padding-top: .9em;
+    padding-bottom: .9em;
+    background-color: #4d5e6e;
+    border: 1px #4d5e6e solid;
+    opacity: .95;
+    width: 100%;
+    transition: none;
+}
+
+.launch-btn:hover {
+    background-color: #4d5e6e;
+    border-style: dotted;
+    border: 1px #fff solid;
+    box-shadow: 0 0 0 1px #4d5e6e, 0 0 0 2px #4d5e6e; 
+    transition: none; 
+}
+
+.default_icon {
+    min-height: 50px;
+}
