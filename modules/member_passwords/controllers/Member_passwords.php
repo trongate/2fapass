@@ -4,17 +4,10 @@ class Member_passwords extends Trongate {
     private $default_limit = 20;
     private $per_page_options = array(10, 20, 50, 100); 
 
-    function _prep_rows($output) {
+    function prep_rows($output) {
         $response_body = $output['body'];
         $rows = json_decode($response_body);
-        $rows = $this->_add_full_pic_paths($rows);
-        $output['body'] = json_encode($rows);
-        return $output;
-    }
-
-    function _add_full_pic_paths($rows) {
         foreach($rows as $key => $value) {
-
             if($value->picture !== '') {
                 $rows[$key]->pic_path = BASE_URL.'member_passwords_module/member_passwords_pics/';
                 $rows[$key]->pic_path.= $value->id.'/'.$value->picture;
@@ -23,12 +16,11 @@ class Member_passwords extends Trongate {
                 $rand_index = rand(0, count(MATCHING_COLORS)-1);
                 $rows[$key]->cell_background = MATCHING_COLORS[$rand_index];
             }
-            
         }
 
-        return $rows;
-    }
-
+        $output['body'] = json_encode($rows);
+        return $output;
+    }   
 
     function create() {
         $this->module('trongate_security');

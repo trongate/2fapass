@@ -5,7 +5,7 @@
     "description": "Fetch rows from table",
     "enableParams": true,
     "authorization":"*",
-    "afterHook": "_prep_rows"
+    "afterHook": "prep_rows"
   },
   "Get By Post": {
     "url_segments": "api/get/member_passwords",
