@@ -290,12 +290,28 @@ function submitForm(submitBtn) {
 
       const parentEl = submitBtn.closest('.modal-body');
       initSuccessClose(parentEl, 'This is a message');
-  }, 2000);
+  }, 100);
 
 }
 
 function initSuccessClose(originalContainer, msg) {
-  drawBigTick(originalContainer);
+  const overlay = createOverlay(originalContainer);
+  overlay.setAttribute('id', 'tick-overlay');
+  document.body.appendChild(overlay);
+  drawBigTick(overlay);
+}
+
+function createOverlay(element) {
+  const overlay = document.createElement('div');
+  const rect = element.getBoundingClientRect();
+  overlay.style.position = 'absolute';
+  overlay.style.top = `${rect.top}px`;
+  overlay.style.left = `${rect.left}px`;
+  overlay.style.width = `${rect.width}px`;
+  overlay.style.height = `${rect.height}px`;
+  overlay.style.zIndex = 7;
+  overlay.style.backgroundColor = '#fdf9f9';
+  return overlay;
 }
 
 function drawBigTick(targetParentEl) {
@@ -350,7 +366,9 @@ function hideBigTick() {
     var things = document.getElementsByClassName('trigger')[0];
     things.classList.remove('drawn');
     var bigTick = document.getElementById('big-tick');
-    bigTick.style.display = 'none'; 
+    bigTick.style.display = 'none';
+    const tickOverlay = document.getElementById('tick-overlay');
+    tickOverlay.remove();
     closeModal();
 }
 
