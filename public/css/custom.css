@@ -340,6 +340,10 @@ button.button.alt {
     min-width: 12em;
 }
 
+.validation-error-report div {
+    font-size: 14px;
+}
+
 @media (min-width: 1px) {
   .center-stage {
       margin: 1em auto;

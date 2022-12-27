@@ -10,53 +10,41 @@
         <div class="logo-font"><?= OUR_NAME ?></div>
         <div><i class="fa fa-times" onclick="closeModal()"></i></div>
     </div>
-
     <div class="modal-body">
-        <?php
-        echo form_open('your_passwords/submit', array('class' => 'password-form'));
-
-        echo '<div>';
-        echo form_label('URL:');
-        echo form_input('website_url', '');
-        echo '</div>';
-
-        echo '<div class="two-col">';
-            echo '<div>';
-            echo form_label('Name:');
-            echo form_input('website_name', '');
-            echo '</div>';
-            echo '<div>';
-            echo form_label('Folder:');
-            echo form_input('folder', '');
-            echo '</div>';
-        echo '</div>';
-
-        echo '<div class="two-col">';
-            echo '<div>';
-            echo form_label('Username:');
-            echo form_input('website_name', '');
-            echo '</div>';
-            echo '<div>';
-            echo form_label('Site password:');
-            echo form_input('folder', '');
-            echo '</div>';
-        echo '</div>';
-
-        echo '<div>';
-        echo form_label('Notes:');
-        echo form_textarea('notes', '');
-        echo '</div>';
-
-    
-        echo '<p class="text-right top_divider">';
-        $cancel_attr['class'] = 'button alt';
-        $cancel_attr['onclick'] = 'closeModal()';
-        echo form_button('cancel', 'Cancel', $cancel_attr);
-        echo form_submit('submit', 'Save');
-        echo '</p>';
-
-        echo form_close();
-        ?>
+        <form class="password-form">
+            <div>
+                <label>URL:</label>
+                <input type="text" id="website-url" id="website-url" value="" autocomplete="off">
+            </div>
+            <div class="two-col">
+                <div>
+                    <label>Website Name:</label>
+                    <input type="text" id="website-name" value="">
+                </div>
+                <div>
+                    <label>Folder:</label>
+                    <input type="text" id="folder" value="">
+                </div>
+            </div>
+            <div class="two-col">
+                <div>
+                    <label>Username:</label>
+                    <input type="text" id="username" value="">
+                </div>
+                <div>
+                    <label>Site password:</label>
+                    <input type="text" id="password" value="">
+                </div>
+            </div>
+            <div>
+                <label>Notes:</label>
+                <textarea id="notes"></textarea>
+            </div>
+            <p class="text-right top_divider">
+                <button type="button" name="cancel" value="Cancel" class="button alt" onclick="closeModal()">Cancel</button>
+                <button type="button" name="submit" value="Save" onclick="saveItem('password')">Save</button>
+            </p>
+        </form>
     </div>
 </div>
 
@@ -107,8 +95,6 @@ function fetchSitePasswords() {
   http.setRequestHeader('Content-type', 'application/json');
   http.send();
   http.onload = function() {
-    console.log(http.status);
-    console.log(http.responseText);
     if (http.status == 200) {
       drawItemsGrid(http.responseText);
     }
@@ -125,7 +111,6 @@ function removeSpinner() {
 function drawItemsGrid(responseText) {
   items = JSON.parse(responseText);
   if (items.length > 0) {
-    console.log('we got ' + items.length);
     removeSpinner();
 
     // Create the items grid element
@@ -186,24 +171,24 @@ function drawItemsGrid(responseText) {
       cardBody.appendChild(child);
 
       if (items[i]['pic_path'] !== '') {
-          // Create the image element
-          var img = document.createElement('img');
-          img.src = items[i]['pic_path'];
-          img.alt = items[i]['website_name'];
-          
+        // Create the image element
+        var img = document.createElement('img');
+        img.src = items[i]['pic_path'];
+        img.alt = items[i]['website_name'];
 
-          // Append the child, image, website name, and website username elements to the card body
-          
-          cardBody.appendChild(img);
-          cardBody.appendChild(websiteName);
-          cardBody.appendChild(websiteUsername);
+
+        // Append the child, image, website name, and website username elements to the card body
+
+        cardBody.appendChild(img);
+        cardBody.appendChild(websiteName);
+        cardBody.appendChild(websiteUsername);
       } else {
         cardBody.classList.add('card-body', 'use-default-pic');
         const upperDiv = document.createElement('div');
         upperDiv.classList.add('use-default-pic-upper');
         const lowerDiv = document.createElement('div');
         lowerDiv.classList.add('use-default-pic-lower');
-        
+
         const dummyImg = document.createElement('div');
         dummyImg.classList.add('dummy-img');
         dummyImg.innerHTML = '<i class="fa fa-lock"></i>';
@@ -232,27 +217,170 @@ function drawItemsGrid(responseText) {
   }
 }
 
-function openAddItem(itemType, index=null) {
-    switch (itemType) {
-      case 'password':
-        openPasswordModal();
-        break;      
-    }
+function openAddItem(itemType, index = null) {
+  switch (itemType) {
+    case 'password':
+      openPasswordModal();
+      break;
+  }
 
 }
 
 function openPasswordModal() {
-    closeModal();
-    setTimeout(() => {
-        openModal('create_password');
-    }, 160);
+  closeModal();
+  setTimeout(() => {
+    openModal('create_password');
+  }, 160);
 }
 
 function launchUrl(targetUrl) {
   window.open(targetUrl, '_blank');
 }
 
+function devAutoOpenForm() {
+  openModal('add_item');
+  setTimeout(() => {
+    openAddItem('password');
+  }, 500);
+}
+
+function saveItem() {
+  const values = readFormValues();
+  if (Array.isArray(values)) {
+    // Validation errors
+    values.forEach((error) => {
+      console.log(error);
+    });
+  } else {
+    // No validation errors
+    const formData = new FormData();
+    for (const key in values) {
+      formData.append(key, values[key]);
+    }
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', 'http://localhost/demo/submit', true);
+    xhr.send(formData);
+  }
+}
+
+function readFormValues() {
+
+  // First, clear all existing validation error alerts
+  const errorAlerts = document.querySelectorAll('.validation-error-alert');
+  errorAlerts.forEach(errorAlert => errorAlert.remove());
+
+  const validationErrors = document.querySelectorAll('.validation-error-report');
+  validationErrors.forEach(errorAlert => errorAlert.remove());
+
+  const form = document.querySelector('.password-form');
+  const inputs = form.querySelectorAll('input');
+  const textarea = form.querySelector('textarea');
+
+  const errors = [];
+  const params = {};
+  for (let i = 0; i < inputs.length; i++) {
+    const input = inputs[i];
+    if (input.id === 'website-url' && !input.value.startsWith('http')) {
+      input.classList.add('form-field-validation-error');
+      const errorMsg = `The website URL must start with http`;
+      errors.push(errorMsg);
+      addValidationError('website-url', errorMsg);
+    } else if (input.id === 'website-name' && input.value.length === 0) {
+      input.classList.add('form-field-validation-error');
+      const errorMsg = `The website name cannot be empty`;
+      errors.push(`${input.id} cannot be empty`);
+      addValidationError('website-name', errorMsg);
+    } else if (input.id === 'password' && input.value.length === 0) {
+      input.classList.add('form-field-validation-error');
+      const errorMsg = `The password is required`;
+      errors.push(`${input.id} is required`);
+      addValidationError('password', errorMsg);
+    } else if (input.id === 'password' && input.value.length > 64) {
+      input.classList.add('form-field-validation-error');
+      const errorMsg = `The password cannot be more than 64 characters in length`;
+      errors.push(`${input.id} is required`);
+      addValidationError('password', errorMsg);
+    } else {
+      input.classList.remove('form-field-validation-error');
+      params[input.id] = input.value;
+    }
+  }
+
+  if (textarea.value.length === 0) {
+    textarea.classList.add('form-field-validation-error');
+    errors.push('notes cannot be empty');
+  } else {
+    textarea.classList.remove('form-field-validation-error');
+    params.notes = textarea.value;
+  }
+
+  const submittedPassword = document.getElementById('password').value;
+  if (submittedPassword.length > 0) {
+    checkPassword(submittedPassword);
+  }
+
+  return errors.length > 0 ? errors : params;
+
+}
+
+function addValidationError(formFieldId, errorMsg) {
+
+  // Get the form field with the corresponding ID
+  const field = document.getElementById(formFieldId);
+  // Get the label for the form field
+  const label = field.previousElementSibling;
+
+  // Create a new div for the validation error alert
+  const errorAlert = document.createElement('div');
+  errorAlert.classList.add('validation-error-report');
+  errorAlert.innerHTML = `<div>● ${errorMsg}</div>`;
+
+  // Insert the validation error alert after the label
+  label.parentNode.insertBefore(errorAlert, label.nextSibling);
+
+}
+
+
+function displayValidationErrors(errors) {
+
+  // Iterate over the errors array
+  errors.forEach(error => {
+    // Get the form field with the corresponding ID
+    const field = document.getElementById(error.key);
+    // Get the label for the form field
+    const label = field.previousElementSibling;
+
+    // Create a new div for the validation error alert
+    const errorAlert = document.createElement('div');
+    errorAlert.classList.add('validation-error-alert');
+    errorAlert.innerHTML = error.value;
+
+    // Insert the validation error alert after the label
+    label.parentNode.insertBefore(errorAlert, label.nextSibling);
+  });
+}
+
+
+function checkPassword(password) {
+  // Check if the password is too short
+  if (password.length < 8) {
+    alert("Just to let you know, the password that you have submitted is too short and would be incredibly easy for a hacker to guess!");
+    return;
+  }
+
+  // Check if the password contains at least one special character
+  const regex = /^(?=.*[^\w\d\s])/;
+  if (!regex.test(password)) {
+    alert("Just to let you know, the password that you have submitted does not contain enough special characters and would be incredibly easy for a hacker to guess!");
+  }
+}
+
+
+
 window.addEventListener('load', (ev) => {
   fetchSitePasswords();
+
+  devAutoOpenForm();
 });
 </script>
