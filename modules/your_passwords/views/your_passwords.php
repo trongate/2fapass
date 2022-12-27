@@ -154,6 +154,7 @@ function drawItemsGrid(responseText) {
       const launchBtn = document.createElement('button');
       launchBtn.classList.add('launch-btn');
       launchBtn.innerText = 'Launch';
+      launchBtn.setAttribute('onclick', 'launchUrl(\'' + items[i]['website_url'] + '\')');
 
       // Append the launch button to the launch div
       launchDiv.appendChild(launchBtn);
@@ -245,6 +246,10 @@ function openPasswordModal() {
     setTimeout(() => {
         openModal('create_password');
     }, 160);
+}
+
+function launchUrl(targetUrl) {
+  window.open(targetUrl, '_blank');
 }
 
 window.addEventListener('load', (ev) => {
