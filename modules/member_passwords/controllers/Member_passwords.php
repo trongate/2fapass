@@ -3,6 +3,58 @@ class Member_passwords extends Trongate {
 
     private $default_limit = 20;
     private $per_page_options = array(10, 20, 50, 100); 
+/*
+    function readFormValues() {
+      $errors = array();
+      $params = array();
+//the beginning of form validation for the password feature.
+      $form = document.querySelector('.password-form');
+      $inputs = $form->querySelectorAll('input');
+      $textarea = $form->querySelector('textarea');
+
+      foreach ($inputs as $input) {
+        if ($input['id'] === 'website-url' && !strpos($input['value'], 'http')) {
+          $input['classList']->add('form-field-validation-error');
+          $errorMsg = "The website URL must start with http";
+          $errors[] = $errorMsg;
+          addValidationError('website-url', $errorMsg);
+        } elseif ($input['id'] === 'website-name' && strlen($input['value']) === 0) {
+          $input['classList']->add('form-field-validation-error');
+          $errorMsg = "The website name cannot be empty";
+          $errors[] = "$input['id'] cannot be empty";
+          addValidationError('website-name', $errorMsg);
+        } elseif ($input['id'] === 'password' && strlen($input['value']) === 0) {
+          $input['classList']->add('form-field-validation-error');
+          $errorMsg = "The password is required";
+          $errors[] = "$input['id'] is required";
+          addValidationError('password', $errorMsg);
+        } elseif ($input['id'] === 'password' && strlen($input['value']) > 64) {
+          $input['classList']->add('form-field-validation-error');
+          $errorMsg = "The password cannot be more than 64 characters in length";
+          $errors[] = "$input['id'] is required";
+          addValidationError('password', $errorMsg);
+        } else {
+          $input['classList']->remove('form-field-validation-error');
+          $params[$input['id']] = $input['value'];
+        }
+      }
+
+      if (strlen($textarea['value']) === 0) {
+        $textarea['classList']->add('form-field-validation-error');
+        $errors[] = "notes cannot be empty";
+      } else {
+        $textarea['classList']->remove('form-field-validation-error');
+        $params['notes'] = $textarea['value'];
+      }
+
+      $submittedPassword = document.getElementById('password')['value'];
+      if (strlen($submittedPassword) > 0) {
+        checkPassword($submittedPassword);
+      }
+
+      return count($errors) > 0 ? $errors : $params;
+    }
+*/
 
     function prep_rows($output) {
         $response_body = $output['body'];

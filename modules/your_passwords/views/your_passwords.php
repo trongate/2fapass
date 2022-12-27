@@ -1,5 +1,5 @@
 <h1>Passwords</h1>
-<p><button onclick="openModal('add_item')">Add New Item <i class="fa fa-plus"></i></button></p>
+<p><button onclick="openCustomModal('add_item')">Add New Item <i class="fa fa-plus"></i></button></p>
 <p class="spinner top_margin"></p>
 
 <div class="modal" id="create_password" style="display:none">
@@ -41,8 +41,8 @@
                 <textarea id="notes"></textarea>
             </div>
             <p class="text-right top_divider">
-                <button type="button" name="cancel" value="Cancel" class="button alt" onclick="closeModal()">Cancel</button>
-                <button type="button" name="submit" value="Save" onclick="saveItem('password')">Save</button>
+                <button type="button" name="cancel" value="Cancel" class="cancel-btn button alt" onclick="closeModal()">Cancel</button>
+                <button type="button" name="submit" id="submit-btn" value="Save" onclick="saveItem('password')">Save</button>
             </p>
         </form>
     </div>
@@ -242,7 +242,57 @@ function devAutoOpenForm() {
   setTimeout(() => {
     openAddItem('password');
   }, 500);
+
+  setTimeout(() => {
+
+    document.getElementById('website-url').value = 'http://speedcodingacademy.com';
+    document.getElementById('website-name').value = 'Speed Coding Academy';
+    document.getElementById('username').value = 'Davcon';
+    document.getElementById('password').value = 'whatever123,';
+    document.getElementById('notes').value = 'Here are some notes';
+
+
+  }, 1000);
 }
+
+function submitForm(submitBtn) {
+    console.log('click');
+  // Show the spinner
+  submitBtn.innerHTML = '<div class="custom-spinner text-primary" role="status"><span class="sr-only">Loading...</span></div>';
+  submitBtn.disabled = true;
+
+  // hide cancel buttons
+  var cancelBtns = document.getElementsByClassName('cancel-btn');
+  for (var i = 0; i < cancelBtns.length; i++) {
+      cancelBtns[i].style.display = 'none';
+  }
+
+  // hide close window buttons
+  var closeWindowBtns = document.querySelectorAll('.modal-heading.two-way-split > div:nth-child(3) > i');
+  for (var i = 0; i < closeWindowBtns.length; i++) {
+      closeWindowBtns[i].style.display = 'none';
+  }
+
+
+
+  // Perform the save action
+  // ...
+  setTimeout(() => {
+      // Revert the button to its original state
+      submitBtn.innerHTML = 'Save';
+      submitBtn.disabled = false;
+
+      for (var i = 0; i < cancelBtns.length; i++) {
+          cancelBtns[i].style.display = 'inline-block';
+      }
+
+      for (var i = 0; i < closeWindowBtns.length; i++) {
+          closeWindowBtns[i].style.display = 'inline-block';
+      }
+  }, 2000);
+
+}
+
 
 function saveItem() {
   const values = readFormValues();
@@ -253,6 +303,14 @@ function saveItem() {
     });
   } else {
     // No validation errors
+    const submitBtn = document.getElementById('submit-btn');
+    submitForm(submitBtn);
+    return;
+    submitBtn.innerHTML = '<span class="spinner"></span>';
+
+    console.log('no validation errors');
+    return;
+
     const formData = new FormData();
     for (const key in values) {
       formData.append(key, values[key]);
@@ -264,14 +322,20 @@ function saveItem() {
   }
 }
 
-function readFormValues() {
-
-  // First, clear all existing validation error alerts
+function removeValidationErrors() {
   const errorAlerts = document.querySelectorAll('.validation-error-alert');
   errorAlerts.forEach(errorAlert => errorAlert.remove());
 
   const validationErrors = document.querySelectorAll('.validation-error-report');
   validationErrors.forEach(errorAlert => errorAlert.remove());
+
+  const validationErrorFields = document.querySelectorAll('.form-field-validation-error');
+  validationErrorFields.forEach(field => field.classList.remove('form-field-validation-error'));
+}
+
+function readFormValues() {
+
+  removeValidationErrors();
 
   const form = document.querySelector('.password-form');
   const inputs = form.querySelectorAll('input');
@@ -376,7 +440,15 @@ function checkPassword(password) {
   }
 }
 
+function openCustomModal() {
+    console.log('here we go');
 
+    setTimeout(() => {
+        removeValidationErrors();
+    }, 10);
+    
+    openModal('add_item');
+}
 
 window.addEventListener('load', (ev) => {
   fetchSitePasswords();

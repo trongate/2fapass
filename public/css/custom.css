@@ -13,8 +13,6 @@
   --alt: #fff;
 }
 
-
-
 .logo-font {
     font-weight: bold;
 }
@@ -343,6 +341,29 @@ button.button.alt {
 .validation-error-report div {
     font-size: 14px;
 }
+
+.custom-spinner {
+  vertical-align: middle;
+  width: 10px;
+  height: 10px;
+  border: 0.2em solid #fff;
+  border-radius: 50%;
+  border-top-color: transparent;
+  animation: custom-spinner .6s linear infinite;
+  margin: 0 auto;
+  padding: 0;
+}
+
+@keyframes custom-spinner {
+  to { transform: rotate(360deg); }
+}
+
+.custom-spinner-sm {
+  width: 0.8rem;
+  height: 0.8rem;
+  border-width: 0.2em;
+}
+
 
 @media (min-width: 1px) {
   .center-stage {
