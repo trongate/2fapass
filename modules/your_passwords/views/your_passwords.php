@@ -273,8 +273,6 @@ function submitForm(submitBtn) {
       closeWindowBtns[i].style.display = 'none';
   }
 
-
-
   // Perform the save action
   // ...
   setTimeout(() => {
@@ -289,9 +287,98 @@ function submitForm(submitBtn) {
       for (var i = 0; i < closeWindowBtns.length; i++) {
           closeWindowBtns[i].style.display = 'inline-block';
       }
+
+      const parentEl = submitBtn.closest('.modal-body');
+      initSuccessClose(parentEl, 'This is a message');
   }, 2000);
 
 }
+
+function initSuccessClose(originalContainer, msg) {
+  drawBigTick(originalContainer);
+}
+
+function drawBigTick(targetParentEl) {
+  console.log('drawing big tick')
+    targetParentEl.classList.add('text-center');
+    var bigTick = document.createElement('div');
+    bigTick.setAttribute('id', 'big-tick');
+    bigTick.setAttribute('style', 'display: none');
+    var trigger = document.createElement('div');
+    trigger.setAttribute('class', 'trigger');
+    bigTick.appendChild(trigger);
+    var tickSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    tickSvg.setAttribute('version', '1.1');
+    tickSvg.setAttribute('id', 'tick');
+    tickSvg.setAttribute('style', 'margin:  0 auto; width:  53.7%; transform: scale(0.5)');
+    tickSvg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+    tickSvg.setAttribute('xmlns:xlink', 'http://www.w3.org/1999/xlink');
+    tickSvg.setAttribute('x', '0px');
+    tickSvg.setAttribute('y', '0px');
+    tickSvg.setAttribute('viewBox', '0 0 37 37');
+    tickSvg.setAttribute('xml:space', 'preserve');
+    bigTick.appendChild(tickSvg);
+
+    var tickPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    tickPath.setAttribute('class', 'circ path');
+    tickPath.setAttribute('style', 'fill:none;stroke:#007700;stroke-width:3;stroke-linejoin:round;stroke-miterlimit:10');
+    tickPath.setAttribute('d', 'M30.5,6.5L30.5,6.5c6.6,6.6,6.6,17.4,0,24l0,0c-6.6,6.6-17.4,6.6-24,0l0,0c-6.6-6.6-6.6-17.4,0-24l0,0C13.1-0.2,23.9-0.2,30.5,6.5z');
+    tickSvg.appendChild(tickPath);
+
+    var polyline = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
+    polyline.setAttribute('class', 'tick path');
+    polyline.setAttribute('style', 'fill:none;stroke:#007700;stroke-width:3;stroke-linejoin:round;stroke-miterlimit:10;');
+    polyline.setAttribute('points', '11.6,20 15.9,24.2 26.4,13.8');
+    tickSvg.appendChild(polyline);
+
+   targetParentEl.appendChild(bigTick);
+    
+    var bigTick = document.getElementById('big-tick');
+    bigTick.style.display = 'block';
+    
+    setTimeout(() => {
+        var things = document.getElementsByClassName('trigger')[0];
+        things.classList.add('drawn');
+    }, 100);
+    
+    setTimeout(() => {
+       hideBigTick();
+    }, 1300);
+}
+
+function hideBigTick() {
+    var things = document.getElementsByClassName('trigger')[0];
+    things.classList.remove('drawn');
+    var bigTick = document.getElementById('big-tick');
+    bigTick.style.display = 'none'; 
+    closeModal();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 function saveItem() {

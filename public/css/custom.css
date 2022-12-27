@@ -344,8 +344,8 @@ button.button.alt {
 
 .custom-spinner {
   vertical-align: middle;
-  width: 10px;
-  height: 10px;
+  width: 9px;
+  height: 9px;
   border: 0.2em solid #fff;
   border-radius: 50%;
   border-top-color: transparent;
@@ -362,6 +362,30 @@ button.button.alt {
   width: 0.8rem;
   height: 0.8rem;
   border-width: 0.2em;
+}
+
+.circ{
+    opacity: 0;
+    stroke-dasharray: 130;
+    stroke-dashoffset: 130;
+    -webkit-transition: all 1s;
+    -moz-transition: all 1s;
+    -ms-transition: all 1s;
+    -o-transition: all 1s;
+    transition: all 1s;
+}
+.tick{
+    stroke-dasharray: 50;
+    stroke-dashoffset: 50;
+    -webkit-transition: stroke-dashoffset 1s 0.5s ease-out;
+    -moz-transition: stroke-dashoffset 1s 0.5s ease-out;
+    -ms-transition: stroke-dashoffset 1s 0.5s ease-out;
+    -o-transition: stroke-dashoffset 1s 0.5s ease-out;
+    transition: stroke-dashoffset 1s 0.5s ease-out;
+}
+.drawn + svg .path{
+    opacity: 1;
+    stroke-dashoffset: 0;
 }
 
 
