@@ -256,6 +256,66 @@ function devAutoOpenForm() {
   }, 1000);
 }
 
+function devAutoOpenFlashdata() {
+  setTimeout(() => {
+    const flashdataMsg = 'The record was successfully created.';
+    const flashdataTheme = 'success';
+    openFlashdata(flashdataMsg, flashdataTheme);
+  }, 1000);
+}
+
+function openFlashdata(flashdataMsg, flashdataTheme) {
+  console.log('running open flashdata')
+  const flashdataDiv = document.createElement('div');
+  flashdataDiv.classList.add('flashdata', flashdataTheme);
+
+  const message = document.createTextNode(flashdataMsg);
+
+  const tick = document.createElement('i');
+  tick.className = 'fa fa-check';
+  tick.setAttribute('aria-hidden', 'true');
+
+  const close = document.createElement('i');
+  close.className = 'fa fa-times';
+  close.setAttribute('aria-hidden', 'true');
+  close.setAttribute('onclick', 'closeFlashdata()');
+
+  flashdataDiv.appendChild(tick);
+  flashdataDiv.appendChild(message);
+  flashdataDiv.appendChild(close);
+
+  document.body.appendChild(flashdataDiv);
+  setTimeout(() => {
+    flashdataDiv.classList.add('flashdata', 'flashdata-success', 'show');
+  }, 1);
+
+  setTimeout(() => {
+    removeFlashdata(flashdataDiv);
+  }, 3000);
+}
+
+
+
+function closeFlashdata() {
+  const flashdataDivs = Array.from(document.getElementsByClassName('flashdata'));
+  for (var i = flashdataDivs.length - 1; i >= 0; i--) {
+    flashdataDivs[i].classList.remove('show');
+    removeFlashdata(flashdataDivs[i])
+  }
+}
+
+function removeFlashdata(flashdataDiv) {
+  if (flashdataDiv) {
+    flashdataDiv.classList.remove('show');
+    setTimeout(() => {
+      flashdataDiv.remove();
+    }, 600);
+  }
+}
+
+
+
+
 function submitForm(submitBtn, formData) {
   console.log('submitting form now');
 
@@ -590,6 +650,7 @@ function openCustomModal() {
 window.addEventListener('load', (ev) => {
   fetchWebsiteRecords();
 
-  devAutoOpenForm();
+  //devAutoOpenForm();
+  devAutoOpenFlashdata();
 });
 </script>

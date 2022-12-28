@@ -388,6 +388,73 @@ button.button.alt {
     stroke-dashoffset: 0;
 }
 
+.flashdata-success {
+  background-color: lightgreen;
+  color: darkgreen;
+}
+
+.flashdataX {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  z-index: 1001;
+  height: 3.6em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: lightgreen;
+  color: darkgreen;
+}
+
+.flashdata {
+  position: fixed;
+  top: -3.6em; /* hide the div above the viewport */
+  left: 0;
+  width: 100%;
+  text-align: center;
+  z-index: 1001;
+  height: 3.6em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: top 0.6s ease-in-out; /* add transition effect */
+}
+
+.flashdata.show {
+  top: 0; /* show the div by moving it down to the top of the viewport */
+}
+
+#flashdataContent {
+  display: flex;
+  align-items: center;
+}
+
+#flashdataMessage {
+  margin-right: auto;
+}
+
+#flashdataClose {
+  margin-left: auto;
+}
+
+.flashdata i.fa.fa-check {
+    margin-right: 7px;
+    font-size: 1.2em;
+}
+
+.flashdata .fa-times {
+  /* other styles */
+  font-size: 1.5em; /* increase the size of the element */
+  position: absolute;
+  right: 1em; /* 1em from the right side of the flashdata div */
+  top: 50%; /* vertically aligned to the center */
+  transform: translateY(-50%); /* aligns the element vertically to the center */
+  cursor: pointer;
+}
+
+
 
 @media (min-width: 1px) {
   .center-stage {
