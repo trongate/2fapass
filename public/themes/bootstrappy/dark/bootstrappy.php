@@ -11,6 +11,9 @@
 	<title>Bootstrappy</title>
 </head>
 <body>
+<script>
+const baseUrl = '<?= BASE_URL ?>';
+</script>
 <div class="top-gutter">
 	<div class="logo logo-font"><?= anchor('#', OUR_NAME) ?></div>
 	<div class="top-rhs">
@@ -57,9 +60,6 @@
     <div id="close-btn" onclick="closeSlideNav()">&times;</div>
     <ul auto-populate="true"></ul>
 </div>
-<script>
-const baseUrl = '<?= BASE_URL ?>';
-</script>
 <script src="<?= BASE_URL ?>js/admin.js"></script>
 <script src="<?= THEME_DIR ?>js/bootstrappy.js"></script>
 <script src="<?= BASE_URL ?>js/trongate-datetime.js"></script>

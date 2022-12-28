@@ -88,8 +88,9 @@
 const centerStage = document.getElementsByClassName('center-stage')[0];
 let items;
 
-function fetchSitePasswords() {
+function fetchWebsiteRecords() {
   targetUrl = baseUrl + 'api/get/website_records';
+  console.log(targetUrl);
   const http = new XMLHttpRequest();
   http.open('get', targetUrl);
   http.setRequestHeader('Content-type', 'application/json');
@@ -108,6 +109,97 @@ function removeSpinner() {
   }
 }
 
+function addItemToContainer(itemObj, itemsContainer) {
+  // Create the card element
+  const card = document.createElement('div');
+  card.classList.add('card');
+
+  // Create the card body element
+  const cardBody = document.createElement('div');
+  cardBody.classList.add('card-body', 'parent');
+
+  // Create the child element
+  const child = document.createElement('div');
+  child.classList.add('child');
+
+  // Create the launch div element
+  const launchDiv = document.createElement('div');
+  launchDiv.classList.add('launch-div');
+
+  // Create the launch button element
+  const launchBtn = document.createElement('button');
+  launchBtn.classList.add('launch-btn');
+  launchBtn.innerText = 'Launch';
+  launchBtn.setAttribute('onclick', 'launchUrl(\'' + itemObj['website_url'] + '\')');
+
+  // Append the launch button to the launch div
+  launchDiv.appendChild(launchBtn);
+
+  // Create the button group element
+  const buttonGroup = document.createElement('div');
+  buttonGroup.innerHTML = `
+    <div><button class="alt"><i class="fa fa-wrench"></i></button></div>
+    <div><button class="alt"><i class="fa fa-users"></i></button></div>
+    <div><button class="alt"><i class="fa fa-trash"></i></button></div>
+  `;
+
+  // Append the button group to the launch div
+  launchDiv.appendChild(buttonGroup);
+
+  // Append the launch div to the child element
+  child.appendChild(launchDiv);
+
+  // Create the website name element
+  const websiteName = document.createElement('div');
+  websiteName.classList.add('website_name');
+  websiteName.innerText = itemObj['website_name'];
+
+  // Create the website username element
+  const websiteUsername = document.createElement('div');
+  websiteUsername.classList.add('website_username');
+  websiteUsername.innerText = itemObj['username'];
+
+  cardBody.appendChild(child);
+
+  if (itemObj['pic_path'] !== '') {
+    // Create the image element
+    var img = document.createElement('img');
+    img.src = itemObj['pic_path'];
+    img.alt = itemObj['website_name'];
+
+
+    // Append the child, image, website name, and website username elements to the card body
+
+    cardBody.appendChild(img);
+    cardBody.appendChild(websiteName);
+    cardBody.appendChild(websiteUsername);
+  } else {
+    cardBody.classList.add('card-body', 'use-default-pic');
+    const upperDiv = document.createElement('div');
+    upperDiv.classList.add('use-default-pic-upper');
+    const lowerDiv = document.createElement('div');
+    lowerDiv.classList.add('use-default-pic-lower');
+
+    const dummyImg = document.createElement('div');
+    dummyImg.classList.add('dummy-img');
+    dummyImg.innerHTML = '<i class="fa fa-lock"></i>';
+    dummyImg.style.backgroundColor = itemObj['cell_background'];
+    upperDiv.appendChild(dummyImg);
+
+    lowerDiv.appendChild(websiteName);
+    lowerDiv.appendChild(websiteUsername);
+
+    cardBody.appendChild(upperDiv);
+    cardBody.appendChild(lowerDiv);
+  }
+
+  // Append the card body to the card element
+  card.appendChild(cardBody);
+
+  // Append the card to the items grid element
+  itemsContainer.appendChild(card);
+}
+
 function drawItemsGrid(responseText) {
   items = JSON.parse(responseText);
   if (items.length > 0) {
@@ -118,98 +210,7 @@ function drawItemsGrid(responseText) {
     itemsGrid.classList.add('items_grid');
 
     for (var i = 0; i < items.length; i++) {
-
-      // Create the card element
-      const card = document.createElement('div');
-      card.classList.add('card');
-
-      // Create the card body element
-      const cardBody = document.createElement('div');
-      cardBody.classList.add('card-body', 'parent');
-
-      // Create the child element
-      const child = document.createElement('div');
-      child.classList.add('child');
-
-      // Create the launch div element
-      const launchDiv = document.createElement('div');
-      launchDiv.classList.add('launch-div');
-
-      // Create the launch button element
-      const launchBtn = document.createElement('button');
-      launchBtn.classList.add('launch-btn');
-      launchBtn.innerText = 'Launch';
-      launchBtn.setAttribute('onclick', 'launchUrl(\'' + items[i]['website_url'] + '\')');
-
-      // Append the launch button to the launch div
-      launchDiv.appendChild(launchBtn);
-
-      // Create the button group element
-      const buttonGroup = document.createElement('div');
-      buttonGroup.innerHTML = `
-        <div><button class="alt"><i class="fa fa-wrench"></i></button></div>
-        <div><button class="alt"><i class="fa fa-users"></i></button></div>
-        <div><button class="alt"><i class="fa fa-trash"></i></button></div>
-      `;
-
-      // Append the button group to the launch div
-      launchDiv.appendChild(buttonGroup);
-
-      // Append the launch div to the child element
-      child.appendChild(launchDiv);
-
-      // Create the website name element
-      const websiteName = document.createElement('div');
-      websiteName.classList.add('website_name');
-      websiteName.innerText = items[i]['website_name'];
-
-      // Create the website username element
-      const websiteUsername = document.createElement('div');
-      websiteUsername.classList.add('website_username');
-      websiteUsername.innerText = items[i]['username'];
-
-      cardBody.appendChild(child);
-
-      if (items[i]['pic_path'] !== '') {
-        // Create the image element
-        var img = document.createElement('img');
-        img.src = items[i]['pic_path'];
-        img.alt = items[i]['website_name'];
-
-
-        // Append the child, image, website name, and website username elements to the card body
-
-        cardBody.appendChild(img);
-        cardBody.appendChild(websiteName);
-        cardBody.appendChild(websiteUsername);
-      } else {
-        cardBody.classList.add('card-body', 'use-default-pic');
-        const upperDiv = document.createElement('div');
-        upperDiv.classList.add('use-default-pic-upper');
-        const lowerDiv = document.createElement('div');
-        lowerDiv.classList.add('use-default-pic-lower');
-
-        const dummyImg = document.createElement('div');
-        dummyImg.classList.add('dummy-img');
-        dummyImg.innerHTML = '<i class="fa fa-lock"></i>';
-        dummyImg.style.backgroundColor = items[i]['cell_background'];
-        upperDiv.appendChild(dummyImg);
-
-        lowerDiv.appendChild(websiteName);
-        lowerDiv.appendChild(websiteUsername);
-
-        cardBody.appendChild(upperDiv);
-        cardBody.appendChild(lowerDiv);
-      }
-
-
-
-      // Append the card body to the card element
-      card.appendChild(cardBody);
-
-      // Append the card to the items grid element
-      itemsGrid.appendChild(card);
-
+      addItemToContainer(items[i], itemsGrid);
     }
 
     // Append the items grid to the document body
@@ -255,7 +256,59 @@ function devAutoOpenForm() {
   }, 1000);
 }
 
-function submitForm(submitBtn) {
+function submitForm(submitBtn, formData) {
+  console.log('submitting form now');
+
+  // Show the spinner
+  submitBtn.innerHTML = '<div class="custom-spinner"></div>';
+  submitBtn.disabled = true;
+
+  // hide cancel buttons
+  var cancelBtns = document.getElementsByClassName('cancel-btn');
+  for (var i = 0; i < cancelBtns.length; i++) {
+      cancelBtns[i].style.display = 'none';
+  }
+
+  // hide close window buttons
+  var closeWindowBtns = document.querySelectorAll('.modal-heading.two-way-split > div:nth-child(3) > i');
+  for (var i = 0; i < closeWindowBtns.length; i++) {
+      closeWindowBtns[i].style.display = 'none';
+  }
+
+  const targetUrl = baseUrl + 'api/create/website_records';
+  const http = new XMLHttpRequest();
+  http.open('post', targetUrl);
+  http.setRequestHeader('Content-type', 'application/json');
+  http.send(JSON.stringify(formData));
+  http.onload = function() {
+
+    if(http.status == 200) {
+      console.log(http.responseText);
+
+      // Revert the button to its original state
+      submitBtn.innerHTML = 'Save';
+      submitBtn.disabled = false;
+
+      for (var i = 0; i < cancelBtns.length; i++) {
+          cancelBtns[i].style.display = 'inline-block';
+      }
+
+      for (var i = 0; i < closeWindowBtns.length; i++) {
+          closeWindowBtns[i].style.display = 'inline-block';
+      }
+
+      const parentEl = submitBtn.closest('.modal-body');
+      initSuccessClose(parentEl, 'This is a message');
+
+      const itemsContainer = document.querySelector('body > div.wrapper > div.center-stage > div.items_grid');
+      const newRecordObj = JSON.parse(http.responseText);
+      addItemToContainer(newRecordObj, itemsContainer)
+    }
+
+  }
+}
+
+function submitFormORIGandWORKS(submitBtn) {
     console.log('click');
   // Show the spinner
   submitBtn.innerHTML = '<div class="custom-spinner text-primary" role="status"><span class="sr-only">Loading...</span></div>';
@@ -290,7 +343,7 @@ function submitForm(submitBtn) {
 
       const parentEl = submitBtn.closest('.modal-body');
       initSuccessClose(parentEl, 'This is a message');
-  }, 100);
+  }, 2000);
 
 }
 
@@ -400,6 +453,7 @@ function hideBigTick() {
 
 
 function saveItem() {
+  //this will EITHER produce validation errors OR post to an endpoint
   const values = readFormValues();
   if (Array.isArray(values)) {
     // Validation errors
@@ -409,21 +463,7 @@ function saveItem() {
   } else {
     // No validation errors
     const submitBtn = document.getElementById('submit-btn');
-    submitForm(submitBtn);
-    return;
-    submitBtn.innerHTML = '<span class="spinner"></span>';
-
-    console.log('no validation errors');
-    return;
-
-    const formData = new FormData();
-    for (const key in values) {
-      formData.append(key, values[key]);
-    }
-
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', 'http://localhost/demo/submit', true);
-    xhr.send(formData);
+    submitForm(submitBtn, values);
   }
 }
 
@@ -548,7 +588,7 @@ function openCustomModal() {
 }
 
 window.addEventListener('load', (ev) => {
-  fetchSitePasswords();
+  fetchWebsiteRecords();
 
   devAutoOpenForm();
 });

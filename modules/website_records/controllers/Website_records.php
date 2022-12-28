@@ -3,76 +3,69 @@ class Website_records extends Trongate {
 
     private $default_limit = 20;
     private $per_page_options = array(10, 20, 50, 100); 
-/*
-    function readFormValues() {
-      $errors = array();
-      $params = array();
-//the beginning of form validation for the password feature.
-      $form = document.querySelector('.password-form');
-      $inputs = $form->querySelectorAll('input');
-      $textarea = $form->querySelector('textarea');
 
-      foreach ($inputs as $input) {
-        if ($input['id'] === 'website-url' && !strpos($input['value'], 'http')) {
-          $input['classList']->add('form-field-validation-error');
-          $errorMsg = "The website URL must start with http";
-          $errors[] = $errorMsg;
-          addValidationError('website-url', $errorMsg);
-        } elseif ($input['id'] === 'website-name' && strlen($input['value']) === 0) {
-          $input['classList']->add('form-field-validation-error');
-          $errorMsg = "The website name cannot be empty";
-          $errors[] = "$input['id'] cannot be empty";
-          addValidationError('website-name', $errorMsg);
-        } elseif ($input['id'] === 'password' && strlen($input['value']) === 0) {
-          $input['classList']->add('form-field-validation-error');
-          $errorMsg = "The password is required";
-          $errors[] = "$input['id'] is required";
-          addValidationError('password', $errorMsg);
-        } elseif ($input['id'] === 'password' && strlen($input['value']) > 64) {
-          $input['classList']->add('form-field-validation-error');
-          $errorMsg = "The password cannot be more than 64 characters in length";
-          $errors[] = "$input['id'] is required";
-          addValidationError('password', $errorMsg);
-        } else {
-          $input['classList']->remove('form-field-validation-error');
-          $params[$input['id']] = $input['value'];
-        }
-      }
+    function _pre_insert_actions($input) {
+        $posted_params = $input['params'];
+        $website_url = $posted_params['website-url'] ?? '';
+        $website_name = $posted_params['website-name'] ?? '';
+        $folder = $posted_params['folder'] ?? '';
+        $username = $posted_params['username'] ?? '';
 
-      if (strlen($textarea['value']) === 0) {
-        $textarea['classList']->add('form-field-validation-error');
-        $errors[] = "notes cannot be empty";
-      } else {
-        $textarea['classList']->remove('form-field-validation-error');
-        $params['notes'] = $textarea['value'];
-      }
+        //validate the submitted data (later)
 
-      $submittedPassword = document.getElementById('password')['value'];
-      if (strlen($submittedPassword) > 0) {
-        checkPassword($submittedPassword);
-      }
+        //get the member's id (later)
 
-      return count($errors) > 0 ? $errors : $params;
+        $data['website_url'] = $website_url;
+        $data['website_name'] = $website_name;
+        //$data['folder'] = $folder; (later)
+        $data['username'] = $username;
+        $data['members_id'] = 1;
+        $data['picture'] = '';
+        $input['params'] = $data;
+        return $input;
     }
-*/
+
+    function _after_insert_actions($output) {
+        $response_body = $output['body'];
+        $record_obj = json_decode($response_body);
+        $additional_record_data = $this->_add_pic_path($record_obj);
+        foreach ($additional_record_data as $key => $value) {
+          $record_obj->$key = $value;
+        }
+
+        $output['body'] = json_encode($record_obj);
+        return $output;
+    }
 
     function prep_rows($output) {
         $response_body = $output['body'];
         $rows = json_decode($response_body);
-        foreach($rows as $key => $value) {
-            if($value->picture !== '') {
-                $rows[$key]->pic_path = BASE_URL.'website_records_module/website_records_pics/';
-                $rows[$key]->pic_path.= $value->id.'/'.$value->picture;
-            } else {
-                $rows[$key]->pic_path = '';
-                $rand_index = rand(0, count(MATCHING_COLORS)-1);
-                $rows[$key]->cell_background = MATCHING_COLORS[$rand_index];
-            }
+
+        foreach($rows as &$row) {
+            $additional_row_data = $this->_add_pic_path($row);
+            $row = array_merge((array) $row, $additional_row_data);
         }
 
         $output['body'] = json_encode($rows);
         return $output;
     }   
+
+    function _add_pic_path($record_obj) {
+        $picture = $record_obj->picture ?? '';
+        $record_id = $record_obj->id ?? 0;
+
+        if($picture !== '') {
+            $pic_path = BASE_URL.'website_records_module/website_records_pics/';
+            $pic_path.= $record_id.'/'.$record_obj->picture;
+        } else {
+            $pic_path = '';
+            $rand_index = rand(0, count(MATCHING_COLORS)-1);
+            $additional_row_data['cell_background'] = MATCHING_COLORS[$rand_index];
+        }
+
+        $additional_row_data['pic_path'] = $pic_path;
+        return $additional_row_data;
+    }
 
     function create() {
         $this->module('trongate_security');

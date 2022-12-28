@@ -1,6 +1,17 @@
 <?php
 class Your_passwords extends Trongate {
 
+    function ditch() {
+        $sql = 'delete from website_records where id>7';
+        $this->model->query($sql);
+
+        $sql2 = 'ALTER TABLE website_records AUTO_INCREMENT = 1';
+        $this->model->query($sql2);
+
+        echo 'done<br>';
+        echo time();
+    }
+
     function index() {
         $this->module('trongate_security');
         $params['reject_url'] = 'members/login';

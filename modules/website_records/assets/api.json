@@ -61,7 +61,10 @@
     "url_segments": "api/create/website_records",
     "request_type": "POST",
     "description": "Insert database record",
-    "enableParams": true
+    "enableParams": true,
+    "authorization":"*",
+    "beforeHook": "_pre_insert_actions",
+    "afterHook": "_after_insert_actions"
   },
   "Insert Batch": {
     "url_segments": "api/batch/website_records",
