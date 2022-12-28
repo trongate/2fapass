@@ -265,7 +265,6 @@ function devAutoOpenFlashdata() {
 }
 
 function openFlashdata(flashdataMsg, flashdataTheme) {
-  console.log('running open flashdata')
 
   // Generate a random id for the flashdata div
   const flashdataId = Math.random().toString(36).substr(2, 9);
@@ -359,9 +358,25 @@ function submitForm(submitBtn, formData) {
 
       const itemsContainer = document.querySelector('body > div.wrapper > div.center-stage > div.items_grid');
       const newRecordObj = JSON.parse(http.responseText);
-      addItemToContainer(newRecordObj, itemsContainer)
+      addItemToContainer(newRecordObj, itemsContainer);
+
+      moveLastChildToBeginning(itemsContainer);
+     
+      setTimeout(() => {
+        const flashdataMsg = 'The new website record was successfully added';
+        const flashdataTheme = 'success';
+        openFlashdata(flashdataMsg, flashdataTheme);
+      }, 1500);
+
     }
 
+  }
+}
+
+function moveLastChildToBeginning(parentElement) {
+  if (parentElement.childElementCount > 1) {
+    const lastChild = parentElement.lastElementChild;
+    parentElement.insertBefore(lastChild, parentElement.firstChild);
   }
 }
 
@@ -647,7 +662,7 @@ function openCustomModal() {
 window.addEventListener('load', (ev) => {
   fetchWebsiteRecords();
 
-  //devAutoOpenForm();
-  devAutoOpenFlashdata();
+  devAutoOpenForm();
+  //devAutoOpenFlashdata();
 });
 </script>
