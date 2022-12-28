@@ -31,7 +31,7 @@
         </div>
     </div>
     
-    <?= Modules::run('module_relations/_draw_summary_panel', 'member_passwords', $token) ?>
+    <?= Modules::run('module_relations/_draw_summary_panel', 'website_records', $token) ?>
 
     <div class="card">
         <div class="card-heading">

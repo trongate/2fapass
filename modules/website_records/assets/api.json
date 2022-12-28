@@ -1,6 +1,6 @@
 {
   "Get": {
-    "url_segments": "api/get/member_passwords",
+    "url_segments": "api/get/website_records",
     "request_type": "GET",
     "description": "Fetch rows from table",
     "enableParams": true,
@@ -8,7 +8,7 @@
     "afterHook": "prep_rows"
   },
   "Get By Post": {
-    "url_segments": "api/get/member_passwords",
+    "url_segments": "api/get/website_records",
     "request_type": "POST",
     "description": "Fetch rows from table using POST request.",
     "enableParams": true,
@@ -19,7 +19,7 @@
     }
   },
   "Find One": {
-    "url_segments": "api/get/member_passwords/{id}",
+    "url_segments": "api/get/website_records/{id}",
     "request_type": "GET",
     "description": "Fetch one row",
     "required_fields": [
@@ -30,7 +30,7 @@
     ]
   },
   "Exists": {
-    "url_segments": "api/exists/member_passwords/{id}",
+    "url_segments": "api/exists/website_records/{id}",
     "request_type": "GET",
     "description": "Check if instance exists",
     "required_fields": [
@@ -41,13 +41,13 @@
     ]
   },
   "Count": {
-    "url_segments": "api/count/member_passwords",
+    "url_segments": "api/count/website_records",
     "request_type": "GET",
     "description": "Count number of records",
     "enableParams": true
   },
   "Count By Post": {
-    "url_segments": "api/count/member_passwords",
+    "url_segments": "api/count/website_records",
     "request_type": "POST",
     "description": "Count number of records using POST request",
     "enableParams": true,
@@ -58,19 +58,19 @@
     }
   },
   "Create": {
-    "url_segments": "api/create/member_passwords",
+    "url_segments": "api/create/website_records",
     "request_type": "POST",
     "description": "Insert database record",
     "enableParams": true
   },
   "Insert Batch": {
-    "url_segments": "api/batch/member_passwords",
+    "url_segments": "api/batch/website_records",
     "request_type": "POST",
     "description": "Insert multiple records",
     "enableParams": true
   },
   "Update": {
-    "url_segments": "api/update/member_passwords/{id}",
+    "url_segments": "api/update/website_records/{id}",
     "request_type": "PUT",
     "description": "Update a database record",
     "enableParams": true,
@@ -82,13 +82,13 @@
     ]
   },
   "Destroy": {
-    "url_segments": "api/destroy/member_passwords",
+    "url_segments": "api/destroy/website_records",
     "request_type": "DELETE",
     "description": "Delete row or rows",
     "enableParams": true
   },
   "Delete One": {
-    "url_segments": "api/delete/member_passwords/{id}",
+    "url_segments": "api/delete/website_records/{id}",
     "request_type": "DELETE",
     "description": "Delete one row",
     "required_fields": [

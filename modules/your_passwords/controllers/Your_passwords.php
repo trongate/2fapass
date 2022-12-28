@@ -14,7 +14,7 @@ class Your_passwords extends Trongate {
     }
 
     function _fetch_items($member_id) {
-        $rows = $this->model->get_many_where('members_id', $member_id, 'member_passwords');
+        $rows = $this->model->get_many_where('members_id', $member_id, 'website_records');
         $rows = $this->_add_full_pic_paths($rows);
 // $more_rows = $rows;
 // for ($i=0; $i < 4; $i++) { 
@@ -28,7 +28,7 @@ class Your_passwords extends Trongate {
         foreach($rows as $key => $value) {
 
             if($value->picture !== '') {
-                $rows[$key]->pic_path = BASE_URL.'member_passwords_module/member_passwords_pics/';
+                $rows[$key]->pic_path = BASE_URL.'website_records_module/website_records_pics/';
                 $rows[$key]->pic_path.= $value->id.'/'.$value->picture;
             } else {
                 $rows[$key]->pic_path = '';
@@ -73,7 +73,7 @@ class Your_passwords extends Trongate {
             $data['picture'] = '';
             $this->module('encryption');
             $data['password'] = $this->encryption->_encrypt($data['password']);
-            $this->model->insert($data, 'member_passwords');
+            $this->model->insert($data, 'website_records');
             set_flashdata('Your new site password record was successfully created');
             redirect('your_passwords');
         } else {

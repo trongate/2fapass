@@ -14,31 +14,31 @@
         <form class="password-form">
             <div>
                 <label>URL:</label>
-                <input type="text" id="website-url" id="website-url" value="" autocomplete="off">
+                <input type="text" id="website-url" id="website-url" value="" placeholder="Enter full website login URL here..." autocomplete="off">
             </div>
             <div class="two-col">
                 <div>
                     <label>Website Name:</label>
-                    <input type="text" id="website-name" value="">
+                    <input type="text" id="website-name" value="" placeholder="Enter website name here...">
                 </div>
                 <div>
                     <label>Folder:</label>
-                    <input type="text" id="folder" value="">
+                    <input type="text" id="folder" value="" placeholder="Select a folder...">
                 </div>
             </div>
             <div class="two-col">
                 <div>
                     <label>Username:</label>
-                    <input type="text" id="username" value="">
+                    <input type="text" id="username" value="" placeholder="Enter username here...">
                 </div>
                 <div>
                     <label>Site password:</label>
-                    <input type="text" id="password" value="">
+                    <input type="text" id="password" value="" placeholder="Enter site password here...">
                 </div>
             </div>
             <div>
                 <label>Notes:</label>
-                <textarea id="notes"></textarea>
+                <textarea id="notes" placeholder="Use this space to enter any notes relating to this record..."></textarea>
             </div>
             <p class="text-right top_divider">
                 <button type="button" name="cancel" value="Cancel" class="cancel-btn button alt" onclick="closeModal()">Cancel</button>
@@ -89,7 +89,7 @@ const centerStage = document.getElementsByClassName('center-stage')[0];
 let items;
 
 function fetchSitePasswords() {
-  targetUrl = baseUrl + 'api/get/member_passwords';
+  targetUrl = baseUrl + 'api/get/website_records';
   const http = new XMLHttpRequest();
   http.open('get', targetUrl);
   http.setRequestHeader('Content-type', 'application/json');
@@ -474,14 +474,6 @@ function readFormValues() {
       input.classList.remove('form-field-validation-error');
       params[input.id] = input.value;
     }
-  }
-
-  if (textarea.value.length === 0) {
-    textarea.classList.add('form-field-validation-error');
-    errors.push('notes cannot be empty');
-  } else {
-    textarea.classList.remove('form-field-validation-error');
-    params.notes = textarea.value;
   }
 
   const submittedPassword = document.getElementById('password').value;

@@ -6,8 +6,8 @@
     </div>
     <div class="card-body">
         <?php 
-        echo anchor('member_passwords/manage', 'View All Member Passwords', array("class" => "button alt"));
-        echo anchor('member_passwords/create/'.$update_id, 'Update Details', array("class" => "button"));
+        echo anchor('website_records/manage', 'View All Website Records', array("class" => "button alt"));
+        echo anchor('website_records/create/'.$update_id, 'Update Details', array("class" => "button"));
         $attr_delete = array( 
             "class" => "danger go-right",
             "id" => "btn-delete-modal",
@@ -20,7 +20,7 @@
 <div class="three-col">
     <div class="card">
         <div class="card-heading">
-            Member Password Details
+            Website Details
         </div>
         <div class="card-body">
             <div class="record-details">
@@ -113,9 +113,9 @@
 <div class="modal" id="delete-modal" style="display: none;">
     <div class="modal-heading danger"><i class="fa fa-trash"></i> Delete Record</div>
     <div class="modal-body">
-        <?= form_open('member_passwords/submit_delete/'.$update_id) ?>
+        <?= form_open('website_records/submit_delete/'.$update_id) ?>
         <p>Are you sure?</p>
-        <p>You are about to delete a Member Password record.  This cannot be undone.  Do you really want to do this?</p> 
+        <p>You are about to delete a website record.  This cannot be undone.  Do you really want to do this?</p> 
         <?php 
         echo '<p>'.form_button('close', 'Cancel', $attr_close);
         echo form_submit('submit', 'Yes - Delete Now', array("class" => 'danger')).'</p>';

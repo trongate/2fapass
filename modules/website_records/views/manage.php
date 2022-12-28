@@ -1,7 +1,7 @@
 <h1><?= $headline ?></h1>
 <?php
 flashdata();
-echo '<p>'.anchor('member_passwords/create', 'Create New Member Password Record', array("class" => "button")).'</p>'; 
+echo '<p>'.anchor('website_records/create', 'Create New Member Password Record', array("class" => "button")).'</p>'; 
 echo Pagination::display($pagination_data);
 if (count($rows)>0) { ?>
     <table id="results-tbl">
@@ -10,7 +10,7 @@ if (count($rows)>0) { ?>
                 <th colspan="5">
                     <div>
                         <div><?php
-                        echo form_open('member_passwords/manage/1/', array("method" => "get"));
+                        echo form_open('website_records/manage/1/', array("method" => "get"));
                         echo form_input('searchphrase', '', array("placeholder" => "Search records..."));
                         echo form_submit('submit', 'Search', array("class" => "alt"));
                         echo form_close();
@@ -40,7 +40,7 @@ if (count($rows)>0) { ?>
                 <td><?= $row->website_url ?></td>
                 <td><?= $row->username ?></td>
                 <td><?= $row->password ?></td>
-                <td><?= anchor('member_passwords/show/'.$row->id, 'View', $attr) ?></td>        
+                <td><?= anchor('website_records/show/'.$row->id, 'View', $attr) ?></td>        
             </tr>
             <?php
             }

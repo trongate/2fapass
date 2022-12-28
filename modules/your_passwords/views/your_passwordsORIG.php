@@ -169,7 +169,7 @@
 
         <div class="dummy-card">
             <div class="card-body">
-                <div id="temp_site_logo"><img src="http://localhost/2fapass/member_passwords_module/member_passwords_pics/2/paypal_alt.png" alt="PayPal Business">                </div>           
+                <div id="temp_site_logo"><img src="http://localhost/2fapass/website_records_module/website_records_pics/2/paypal_alt.png" alt="PayPal Business">                </div>           
             </div>            
         </div>
 

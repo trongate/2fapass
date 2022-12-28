@@ -1,5 +1,5 @@
 <?php
-class Member_passwords extends Trongate {
+class Website_records extends Trongate {
 
     private $default_limit = 20;
     private $per_page_options = array(10, 20, 50, 100); 
@@ -61,7 +61,7 @@ class Member_passwords extends Trongate {
         $rows = json_decode($response_body);
         foreach($rows as $key => $value) {
             if($value->picture !== '') {
-                $rows[$key]->pic_path = BASE_URL.'member_passwords_module/member_passwords_pics/';
+                $rows[$key]->pic_path = BASE_URL.'website_records_module/website_records_pics/';
                 $rows[$key]->pic_path.= $value->id.'/'.$value->picture;
             } else {
                 $rows[$key]->pic_path = '';
@@ -90,14 +90,14 @@ class Member_passwords extends Trongate {
         $data['members_options'] = $this->_get_members_options($data['members_id']);
 
         if ($update_id>0) {
-            $data['headline'] = 'Update Member Password Record';
-            $data['cancel_url'] = BASE_URL.'member_passwords/show/'.$update_id;
+            $data['headline'] = 'Update Website Record';
+            $data['cancel_url'] = BASE_URL.'website_records/show/'.$update_id;
         } else {
-            $data['headline'] = 'Create New Member Password Record';
-            $data['cancel_url'] = BASE_URL.'member_passwords/manage';
+            $data['headline'] = 'Create New Website Record';
+            $data['cancel_url'] = BASE_URL.'website_records/manage';
         }
 
-        $data['form_location'] = BASE_URL.'member_passwords/submit/'.$update_id;
+        $data['form_location'] = BASE_URL.'website_records/submit/'.$update_id;
         $data['view_file'] = 'create';
         $this->template('admin', $data);
     }
@@ -113,7 +113,7 @@ class Member_passwords extends Trongate {
             $params['website_url'] = '%'.$searchphrase.'%';
             $params['username'] = '%'.$searchphrase.'%';
             $params['password'] = '%'.$searchphrase.'%';
-            $sql = 'select * from member_passwords
+            $sql = 'select * from website_records
             WHERE website_name LIKE :website_name
             OR website_url LIKE :website_url
             OR username LIKE :username
@@ -121,22 +121,22 @@ class Member_passwords extends Trongate {
             ORDER BY website_name';
             $all_rows = $this->model->query_bind($sql, $params, 'object');
         } else {
-            $data['headline'] = 'Manage Member Passwords';
+            $data['headline'] = 'Manage Website Records';
             $all_rows = $this->model->get('website_name');
         }
 
         $pagination_data['total_rows'] = count($all_rows);
         $pagination_data['page_num_segment'] = 3;
         $pagination_data['limit'] = $this->_get_limit();
-        $pagination_data['pagination_root'] = 'member_passwords/manage';
-        $pagination_data['record_name_plural'] = 'member passwords';
+        $pagination_data['pagination_root'] = 'website_records/manage';
+        $pagination_data['record_name_plural'] = 'website records';
         $pagination_data['include_showing_statement'] = true;
         $data['pagination_data'] = $pagination_data;
 
         $data['rows'] = $this->_reduce_rows($all_rows);
         $data['selected_per_page'] = $this->_get_selected_per_page();
         $data['per_page_options'] = $this->per_page_options;
-        $data['view_module'] = 'member_passwords';
+        $data['view_module'] = 'website_records';
         $data['view_file'] = 'manage';
         $this->template('admin', $data);
     }
@@ -147,14 +147,14 @@ class Member_passwords extends Trongate {
         $update_id = (int) segment(3);
 
         if ($update_id == 0) {
-            redirect('member_passwords/manage');
+            redirect('website_records/manage');
         }
 
         $data = $this->_get_data_from_db($update_id);
         $data['token'] = $token;
 
         if ($data == false) {
-            redirect('member_passwords/manage');
+            redirect('website_records/manage');
         } else {
             //generate picture folders, if required
             $picture_settings = $this->_init_picture_settings();
@@ -180,7 +180,7 @@ class Member_passwords extends Trongate {
                 $data['draw_picture_uploader'] = true;
             }
             $data['update_id'] = $update_id;
-            $data['headline'] = 'Member Password Information';
+            $data['headline'] = 'Website Information';
             $data['view_file'] = 'show';
             $this->template('admin', $data);
         }
@@ -226,16 +226,16 @@ class Member_passwords extends Trongate {
                 
                 if ($update_id>0) {
                     //update an existing record
-                    $this->model->update($update_id, $data, 'member_passwords');
+                    $this->model->update($update_id, $data, 'website_records');
                     $flash_msg = 'The record was successfully updated';
                 } else {
                     //insert the new record
-                    $update_id = $this->model->insert($data, 'member_passwords');
+                    $update_id = $this->model->insert($data, 'website_records');
                     $flash_msg = 'The record was successfully created';
                 }
 
                 set_flashdata($flash_msg);
-                redirect('member_passwords/show/'.$update_id);
+                redirect('website_records/show/'.$update_id);
 
             } else {
                 //form submission error
@@ -256,18 +256,18 @@ class Member_passwords extends Trongate {
         if (($submit == 'Yes - Delete Now') && ($params['update_id']>0)) {
             //delete all of the comments associated with this record
             $sql = 'delete from trongate_comments where target_table = :module and update_id = :update_id';
-            $params['module'] = 'member_passwords';
+            $params['module'] = 'website_records';
             $this->model->query_bind($sql, $params);
 
             //delete the record
-            $this->model->delete($params['update_id'], 'member_passwords');
+            $this->model->delete($params['update_id'], 'website_records');
 
             //set the flashdata
             $flash_msg = 'The record was successfully deleted';
             set_flashdata($flash_msg);
 
             //redirect to the manage page
-            redirect('member_passwords/manage');
+            redirect('website_records/manage');
         }
     }
 
@@ -307,11 +307,11 @@ class Member_passwords extends Trongate {
         }
 
         $_SESSION['selected_per_page'] = $selected_index;
-        redirect('member_passwords/manage');
+        redirect('website_records/manage');
     }
 
     function _get_data_from_db($update_id) {
-        $record_obj = $this->model->get_where($update_id, 'member_passwords');
+        $record_obj = $this->model->get_where($update_id, 'website_records');
 
         if ($record_obj == false) {
             $this->template('error_404');
@@ -333,7 +333,7 @@ class Member_passwords extends Trongate {
 
     function _get_members_options($selected_key) {
         $this->module('module_relations');
-        $options = $this->module_relations->_fetch_options($selected_key, 'member_passwords', 'members');
+        $options = $this->module_relations->_fetch_options($selected_key, 'website_records', 'members');
         return $options;
     }
     function _init_picture_settings() { 
@@ -342,9 +342,9 @@ class Member_passwords extends Trongate {
         $picture_settings['max_height'] = 1200;
         $picture_settings['resized_max_width'] = 450;
         $picture_settings['resized_max_height'] = 450;
-        $picture_settings['destination'] = 'member_passwords_pics';
+        $picture_settings['destination'] = 'website_records_pics';
         $picture_settings['target_column_name'] = 'picture';
-        $picture_settings['thumbnail_dir'] = 'member_passwords_pics_thumbnails';
+        $picture_settings['thumbnail_dir'] = 'website_records_pics_thumbnails';
         $picture_settings['thumbnail_max_width'] = 120;
         $picture_settings['thumbnail_max_height'] = 120;
         $picture_settings['upload_to_module'] = true;

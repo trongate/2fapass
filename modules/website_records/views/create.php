@@ -2,7 +2,7 @@
 <?= validation_errors() ?>
 <div class="card">
     <div class="card-heading">
-        Member Password Details
+        Website Details
     </div>
     <div class="card-body">
         <?php
