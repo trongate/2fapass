@@ -358,10 +358,10 @@ function submitForm(submitBtn, formData) {
 
       const itemsContainer = document.querySelector('body > div.wrapper > div.center-stage > div.items_grid');
       const newRecordObj = JSON.parse(http.responseText);
-      addItemToContainer(newRecordObj, itemsContainer);
 
+      addItemToContainer(newRecordObj, itemsContainer);
       moveLastChildToBeginning(itemsContainer);
-     
+
       setTimeout(() => {
         const flashdataMsg = 'The new website record was successfully added';
         const flashdataTheme = 'success';
