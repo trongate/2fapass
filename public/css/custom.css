@@ -391,21 +391,7 @@ button.button.alt {
 .flashdata-success {
   background-color: lightgreen;
   color: darkgreen;
-}
-
-.flashdataX {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  text-align: center;
-  z-index: 1001;
-  height: 3.6em;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: lightgreen;
-  color: darkgreen;
+  border-bottom: 1px darkgreen solid;
 }
 
 .flashdata {

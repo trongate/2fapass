@@ -266,8 +266,13 @@ function devAutoOpenFlashdata() {
 
 function openFlashdata(flashdataMsg, flashdataTheme) {
   console.log('running open flashdata')
+
+  // Generate a random id for the flashdata div
+  const flashdataId = Math.random().toString(36).substr(2, 9);
+
   const flashdataDiv = document.createElement('div');
   flashdataDiv.classList.add('flashdata', flashdataTheme);
+  flashdataDiv.id = flashdataId;
 
   const message = document.createTextNode(flashdataMsg);
 
@@ -278,7 +283,7 @@ function openFlashdata(flashdataMsg, flashdataTheme) {
   const close = document.createElement('i');
   close.className = 'fa fa-times';
   close.setAttribute('aria-hidden', 'true');
-  close.setAttribute('onclick', 'closeFlashdata()');
+  close.setAttribute('onclick', `removeFlashdata('${flashdataId}')`);
 
   flashdataDiv.appendChild(tick);
   flashdataDiv.appendChild(message);
@@ -290,21 +295,16 @@ function openFlashdata(flashdataMsg, flashdataTheme) {
   }, 1);
 
   setTimeout(() => {
-    removeFlashdata(flashdataDiv);
+    closeFlashdata(flashdataDiv);
   }, 3000);
 }
 
-
-
-function closeFlashdata() {
-  const flashdataDivs = Array.from(document.getElementsByClassName('flashdata'));
-  for (var i = flashdataDivs.length - 1; i >= 0; i--) {
-    flashdataDivs[i].classList.remove('show');
-    removeFlashdata(flashdataDivs[i])
-  }
+function removeFlashdata(elId) {
+  const flashdataDiv = document.getElementById(elId);
+  closeFlashdata(flashdataDiv);
 }
 
-function removeFlashdata(flashdataDiv) {
+function closeFlashdata(flashdataDiv) {
   if (flashdataDiv) {
     flashdataDiv.classList.remove('show');
     setTimeout(() => {
@@ -312,9 +312,6 @@ function removeFlashdata(flashdataDiv) {
     }, 600);
   }
 }
-
-
-
 
 function submitForm(submitBtn, formData) {
   console.log('submitting form now');
