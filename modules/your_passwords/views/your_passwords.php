@@ -366,7 +366,7 @@ function submitForm(submitBtn, formData) {
         const flashdataMsg = 'The new website record was successfully added';
         const flashdataTheme = 'success';
         openFlashdata(flashdataMsg, flashdataTheme);
-      }, 1500);
+      }, 1333);
 
     }
 
