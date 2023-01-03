@@ -440,7 +440,10 @@ button.button.alt {
   cursor: pointer;
 }
 
-
+textarea.form-field-validation-error {
+    border: 3px #ff0000 solid !important;
+    background-color: #ff000011 !important;
+}
 
 @media (min-width: 1px) {
   .center-stage {

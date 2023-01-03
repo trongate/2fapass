@@ -14,7 +14,7 @@
         <form class="password-form">
             <div>
                 <label>URL:</label>
-                <input type="text" id="website-url" id="website-url" value="" placeholder="Enter full website login URL here..." autocomplete="off">
+                <input type="text" id="website-url" value="" placeholder="Enter full website login URL here..." autocomplete="off">
             </div>
             <div class="two-col">
                 <div>
@@ -33,7 +33,7 @@
                 </div>
                 <div>
                     <label>Site password:</label>
-                    <input type="text" id="password" value="" placeholder="Enter site password here...">
+                    <input type="text" id="password" value="" placeholder="Enter site password here..." autocomplete="off">
                 </div>
             </div>
             <div>
@@ -86,6 +86,7 @@
 
 <script>
 const centerStage = document.getElementsByClassName('center-stage')[0];
+let currentRecordCode = '';
 let items;
 
 function fetchWebsiteRecords() {
@@ -113,6 +114,7 @@ function addItemToContainer(itemObj, itemsContainer) {
   // Create the card element
   const card = document.createElement('div');
   card.classList.add('card');
+  card.setAttribute('id', 'card-' + itemObj['id']);
 
   // Create the card body element
   const cardBody = document.createElement('div');
@@ -132,19 +134,52 @@ function addItemToContainer(itemObj, itemsContainer) {
   launchBtn.innerText = 'Launch';
   launchBtn.setAttribute('onclick', 'launchUrl(\'' + itemObj['website_url'] + '\')');
 
-  // Append the launch button to the launch div
+  // Append the launch button
   launchDiv.appendChild(launchBtn);
 
-  // Create the button group element
-  const buttonGroup = document.createElement('div');
-  buttonGroup.innerHTML = `
-    <div><button class="alt"><i class="fa fa-wrench"></i></button></div>
-    <div><button class="alt"><i class="fa fa-users"></i></button></div>
-    <div><button class="alt"><i class="fa fa-trash"></i></button></div>
-  `;
+  // Create button group element
+  var outerDiv = document.createElement("div");
+  outerDiv.id = "8136e02444a0";
 
-  // Append the button group to the launch div
-  launchDiv.appendChild(buttonGroup);
+  // Create the inner div elements
+  var innerDiv1 = document.createElement("div");
+  var innerDiv2 = document.createElement("div");
+  var innerDiv3 = document.createElement("div");
+
+  // Create the button elements
+  var button1 = document.createElement("button");
+  button1.className = "alt";
+  button1.setAttribute("onclick", "initUpdateItem(" + itemObj['id'] + ")");
+  var button2 = document.createElement("button");
+  button2.className = "alt";
+  var button3 = document.createElement("button");
+  button3.className = "alt";
+
+  // Create the i elements
+  var i1 = document.createElement("i");
+  i1.setAttribute("class", "fa fa-wrench");
+  var i2 = document.createElement("i");
+  i2.className = "fa fa-users";
+  var i3 = document.createElement("i");
+  i3.className = "fa fa-trash";
+
+  // Append the i elements to the button elements
+  button1.appendChild(i1);
+  button2.appendChild(i2);
+  button3.appendChild(i3);
+
+  // Append the button elements to the inner div elements
+  innerDiv1.appendChild(button1);
+  innerDiv2.appendChild(button2);
+  innerDiv3.appendChild(button3);
+
+  // Append the inner div elements to the outer div element
+  outerDiv.appendChild(innerDiv1);
+  outerDiv.appendChild(innerDiv2);
+  outerDiv.appendChild(innerDiv3);
+
+  // Append the outer div element to the body of the page
+  launchDiv.appendChild(outerDiv);
 
   // Append the launch div to the child element
   child.appendChild(launchDiv);
@@ -192,6 +227,29 @@ function addItemToContainer(itemObj, itemsContainer) {
     cardBody.appendChild(upperDiv);
     cardBody.appendChild(lowerDiv);
   }
+
+  //Add hidden data to the card body
+  const hiddenCardData1 = document.createElement("div");
+  hiddenCardData1.id = "hidden-card-data-" + itemObj['id'];
+  hiddenCardData1.style.display = "none";
+
+  const usernameDiv = document.createElement("div");
+  usernameDiv.className = "record-username";
+  usernameDiv.textContent = itemObj['username'];
+
+  const passwordDiv = document.createElement("div");
+  passwordDiv.className = "record-password";
+  passwordDiv.textContent = itemObj['password'];
+
+  const notesDiv = document.createElement("div");
+  notesDiv.className = "record-notes";
+  notesDiv.textContent = itemObj['notes'];
+
+  hiddenCardData1.appendChild(usernameDiv);
+  hiddenCardData1.appendChild(passwordDiv);
+  hiddenCardData1.appendChild(notesDiv);
+
+  cardBody.appendChild(hiddenCardData1);
 
   // Append the card body to the card element
   card.appendChild(cardBody);
@@ -335,6 +393,8 @@ function submitForm(submitBtn, formData) {
   const http = new XMLHttpRequest();
   http.open('post', targetUrl);
   http.setRequestHeader('Content-type', 'application/json');
+  console.log(JSON.stringify(formData));
+  return;
   http.send(JSON.stringify(formData));
   http.onload = function() {
 
@@ -551,41 +611,66 @@ function removeValidationErrors() {
 }
 
 function readFormValues() {
-
   removeValidationErrors();
 
   const form = document.querySelector('.password-form');
   const inputs = form.querySelectorAll('input');
-  const textarea = form.querySelector('textarea');
+  const textarea = form.querySelector('#notes');
 
   const errors = [];
   const params = {};
+
   for (let i = 0; i < inputs.length; i++) {
     const input = inputs[i];
-    if (input.id === 'website-url' && !input.value.startsWith('http')) {
+    let errorMsg = '';
+    let valid = true;
+
+    switch (input.id) {
+      case 'website-url':
+        if (!input.value.startsWith('http')) {
+          errorMsg = `The website URL must start with http`;
+          valid = false;
+        }
+        break;
+      case 'website-name':
+        if (input.value.length === 0) {
+          errorMsg = `The website name cannot be empty`;
+          valid = false;
+        }
+        break;
+      case 'password':
+        if (input.value.length === 0) {
+          errorMsg = `The password is required`;
+          valid = false;
+        } else if (input.value.length > 64) {
+          errorMsg = `The password cannot be more than 64 characters in length`;
+          valid = false;
+        }
+        break;
+      default:
+        // No validation needed
+        params[input.id] = input.value;
+        break;
+    }
+
+    if (!valid) {
       input.classList.add('form-field-validation-error');
-      const errorMsg = `The website URL must start with http`;
       errors.push(errorMsg);
-      addValidationError('website-url', errorMsg);
-    } else if (input.id === 'website-name' && input.value.length === 0) {
-      input.classList.add('form-field-validation-error');
-      const errorMsg = `The website name cannot be empty`;
-      errors.push(`${input.id} cannot be empty`);
-      addValidationError('website-name', errorMsg);
-    } else if (input.id === 'password' && input.value.length === 0) {
-      input.classList.add('form-field-validation-error');
-      const errorMsg = `The password is required`;
-      errors.push(`${input.id} is required`);
-      addValidationError('password', errorMsg);
-    } else if (input.id === 'password' && input.value.length > 64) {
-      input.classList.add('form-field-validation-error');
-      const errorMsg = `The password cannot be more than 64 characters in length`;
-      errors.push(`${input.id} is required`);
-      addValidationError('password', errorMsg);
+      addValidationError(input.id, errorMsg);
     } else {
       input.classList.remove('form-field-validation-error');
       params[input.id] = input.value;
     }
+  }
+
+  if (textarea.value.length > 800) {
+    textarea.classList.add('form-field-validation-error');
+    const errorMsg = `The notes cannot be more than 800 characters in length`;
+    errors.push(errorMsg);
+    addValidationError(textarea.id, errorMsg);
+  } else {
+    textarea.classList.remove('form-field-validation-error');
+    params[textarea.id] = textarea.value;
   }
 
   const submittedPassword = document.getElementById('password').value;
@@ -594,11 +679,36 @@ function readFormValues() {
   }
 
   return errors.length > 0 ? errors : params;
-
 }
 
 function addValidationError(formFieldId, errorMsg) {
+  // Get the form field with the corresponding ID
+  const field = document.getElementById(formFieldId);
+  // Get the label for the form field
+  const label = field.previousElementSibling;
 
+  // Check if an error message div already exists for the form field
+  const existingErrorAlert = document.querySelector(`#${formFieldId} + .validation-error-report`);
+
+  if (!existingErrorAlert) {
+    // Create a new div for the validation error alert
+    const errorAlert = document.createElement('div');
+    errorAlert.classList.add('validation-error-report');
+    errorAlert.innerHTML = `<div>● ${errorMsg}</div>`;
+
+    // Insert the validation error alert after the form field
+ 
+    label.appendChild(errorAlert);
+  } else {
+    // Update the error message in the existing error message div
+    existingErrorAlert.innerHTML = `<div>● ${errorMsg}</div>`;
+  }
+}
+
+
+
+function addValidationErrorX(formFieldId, errorMsg) {
+console.log('adding val error for ' + formFieldId);
   // Get the form field with the corresponding ID
   const field = document.getElementById(formFieldId);
   // Get the label for the form field
@@ -649,20 +759,54 @@ function checkPassword(password) {
   }
 }
 
-function openCustomModal() {
-    console.log('here we go');
+function initUpdateItem(recordId) {
+
+  const cardElement = document.getElementById("card-" + recordId);
+  const websiteNameElement = cardElement.querySelector(".website_name");
+  const websiteName = websiteNameElement.textContent;
+
+  const buttonElement = cardElement.querySelector(".launch-btn");
+  const onclick = buttonElement.getAttribute("onclick");
+  const websiteUrl = onclick.match(/'(.*?)'/)[1];
+
+  const hiddenCardData = document.getElementById("hidden-card-data-" + recordId);
+  const usernameDiv = hiddenCardData.querySelector(".record-username");
+  const username = usernameDiv.textContent;
+
+  const passwordDiv = hiddenCardData.querySelector(".record-password");
+  const password = passwordDiv.textContent;
+
+  const notesDiv = hiddenCardData.querySelector(".record-notes");
+  const notes = notesDiv.textContent;
+
+  openModal('create_password');
+
+  document.getElementById('website-url').value = websiteUrl;
+  document.getElementById('website-name').value = websiteName;
+  document.getElementById('username').value = username;
+  document.getElementById('password').value = password;
+  document.getElementById('notes').value = notes;
+
+}
+
+setInterval(() => {
+    console.log(currentRecordCode);
+}, 1000);
+
+function openCustomModal(itemType, recordCode='') {
+    console.log('here we go with ' + itemType + ' and ' + recordCode);
 
     setTimeout(() => {
         removeValidationErrors();
     }, 10);
     
-    openModal('add_item');
+    openModal(itemType, recordCode);
 }
 
 window.addEventListener('load', (ev) => {
   fetchWebsiteRecords();
 
-  devAutoOpenForm();
+  //devAutoOpenForm();
   //devAutoOpenFlashdata();
 });
 </script>

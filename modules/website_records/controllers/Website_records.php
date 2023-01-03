@@ -4,6 +4,16 @@ class Website_records extends Trongate {
     private $default_limit = 20;
     private $per_page_options = array(10, 20, 50, 100); 
 
+    function fix() {
+        $rows = $this->model->get('id');
+        foreach($rows as $row) {
+            $update_id = $row->id;
+            $this->model->update($update_id, $data);
+        }
+
+        echo 'cool';
+    }
+
     function _pre_insert_actions($input) {
         $posted_params = $input['params'];
         $website_url = $posted_params['website-url'] ?? '';

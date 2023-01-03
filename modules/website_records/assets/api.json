@@ -12,11 +12,7 @@
     "request_type": "POST",
     "description": "Fetch rows from table using POST request.",
     "enableParams": true,
-    "authorization":{  
-        "roles": [
-            "admin"
-        ]
-    }
+    "authorization":"*"
   },
   "Find One": {
     "url_segments": "api/get/website_records/{id}",
