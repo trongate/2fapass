@@ -7,8 +7,8 @@
 	    </div>
 	    <div class="card-body">
 	        <?php 
-	        echo anchor('members/update/'.$code, 'Update Your Details', array("class" => "button alt"));
-	        echo anchor('members/update_password', 'Update Password', array("class" => "button alt"));
+	        echo anchor('members-account/update/'.$code, 'Update Your Details', array("class" => "button alt"));
+	        echo anchor('members-account/update_password', 'Update Password', array("class" => "button alt"));
 	        echo anchor('members/logout', 'Sign Out', array("class" => "button"));
 	        ?>
 	    </div>

@@ -1,5 +1,5 @@
 <section class="container">
-	<h1><?= $headline ?></h1>
+	<h1 class="text-center"><?= $headline ?></h1>
     <p style="text-align: center;">Your password must be at least five characters long with at least one one number</p>
     <?php
     echo validation_errors();
@@ -17,5 +17,4 @@
     
     echo form_close();
     ?>
-
 </section>

@@ -11,7 +11,7 @@
 	
 <div>
 	<?php
-	echo form_open('members/submit_login');
+	echo form_open('members-account/submit_login');
 	echo '<div class="form-body">';
     validation_errors();
     echo form_label('Username or Email Address');
@@ -36,10 +36,6 @@
     echo form_close();
     echo '<p>';
     echo anchor(BASE_URL, '&#8592; Return To Homepage');
-    echo '</p>';
-
-    echo '<p>';
-    echo anchor('members/auto_login', 'Auto-login');
     echo '</p>';
     ?>
 </div>

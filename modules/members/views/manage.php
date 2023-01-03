@@ -7,7 +7,7 @@ if (count($rows)>0) { ?>
     <table id="results-tbl">
         <thead>
             <tr>
-                <th colspan="6">
+                <th colspan="8">
                     <div>
                         <div><?php
                         echo form_open('members/manage/1/', array("method" => "get"));
@@ -28,6 +28,8 @@ if (count($rows)>0) { ?>
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Email Address</th>
+                <th>Date Joined</th>
+                <th>Num Logins</th>
                 <th>Confirmed</th>
                 <th style="width: 20px;">Action</th>            
             </tr>
@@ -41,6 +43,8 @@ if (count($rows)>0) { ?>
                 <td><?= $row->first_name ?></td>
                 <td><?= $row->last_name ?></td>
                 <td><?= $row->email_address ?></td>
+                <td><?= date('l, jS F Y', $row->date_joined) ?></td>
+                <td><?= $row->num_logins ?></td>
                 <td><?= $row->confirmed ?></td>
                 <td><?= anchor('members/show/'.$row->id, 'View', $attr) ?></td>        
             </tr>

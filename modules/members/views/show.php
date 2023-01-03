@@ -17,22 +17,52 @@
         ?>
     </div>
 </div>
-<div class="three-col">
-    <div class="card record-details">
+<div class="two-col">
+    <div class="card">
         <div class="card-heading">
             Member Details
         </div>
         <div class="card-body">
-            <div><span>Username</span><span><?= $username ?></span></div>
-            <div><span>First Name</span><span><?= $first_name ?></span></div>
-            <div><span>Last Name</span><span><?= $last_name ?></span></div>
-            <div><span>Email Address</span><span><?= $email_address ?></span></div>
-            <div><span>Confirmed</span><span><?= $confirmed ?></span></div>
+            <div class="record-details">
+                <div class="row">
+                    <div>Username</div>
+                    <div><?= $username ?></div>
+                </div>
+                <div class="row">
+                    <div>First Name</div>
+                    <div><?= $first_name ?></div>
+                </div>
+                <div class="row">
+                    <div>Last Name</div>
+                    <div><?= $last_name ?></div>
+                </div>
+                <div class="row">
+                    <div>Email Address</div>
+                    <div><?= $email_address ?></div>
+                </div>
+                <div class="row">
+                    <div>Date Joined</div>
+                    <div><?= date('l, jS F Y', $date_joined) ?></div>
+                </div>
+                <div class="row">
+                    <div>Code</div>
+                    <div><?= $code ?></div>
+                </div>
+                <div class="row">
+                    <div>Num Logins</div>
+                    <div><?= $num_logins ?></div>
+                </div>
+                <div class="row">
+                    <div>Trongate User ID</div>
+                    <div><?= $trongate_user_id ?></div>
+                </div>
+                <div class="row">
+                    <div>Confirmed</div>
+                    <div><?= $confirmed ?></div>
+                </div>
+            </div>
         </div>
     </div>
-    
-    <?= Modules::run('module_relations/_draw_summary_panel', 'website_records', $token) ?>
-
     <div class="card">
         <div class="card-heading">
             Comments

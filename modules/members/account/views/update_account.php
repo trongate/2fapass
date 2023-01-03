@@ -1,7 +1,7 @@
 <section class="container">
-    <h1>Join</h1>
-    <?= validation_errors() ?>
+	<h1>Update Your Details</h1>
     <?php
+    validation_errors();
     $form_attr['class'] = 'narrow-form';
     echo form_open($form_location, $form_attr);
 
@@ -22,8 +22,7 @@
     echo form_email('email_address', $email_address, $attr);
 
     echo form_submit('submit', 'Submit');
-    echo anchor(BASE_URL, 'Cancel', array('class' => 'button alt'));
+    echo anchor('members-account/your_account', 'Cancel', array('class' => 'button alt'));
     echo form_close();
     ?>
-    <p><?= anchor('members/autocreate_account', 'Auto-create New Account') ?></p>
 </section>
