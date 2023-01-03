@@ -31,24 +31,6 @@ function closeSlideNav() {
     slideNavOpen = false;
 }
 
-function checkFunctionExists(funcName) {
-  if (typeof window[funcName] === 'function') {
-    alert('function exists');
-  } else {
-    alert('function does not exist');
-  }
-}
-
-// Test the function
-checkFunctionExists('myFunction'); // alerts 'function does not exist'
-
-function myFunction() {
-  // function code goes here
-}
-
-checkFunctionExists('myFunction'); // alerts 'function exists'
-
-
 function openModal(modalId) {
 
     var pageOverlay = document.getElementById("overlay");

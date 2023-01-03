@@ -7,6 +7,7 @@
 
     echo form_label('Username');
     $attr['placeholder'] = 'Enter your username of choice here...';
+    $attr['autocomplete'] = 'off';
     echo form_input('username', $username, $attr);
 
     echo form_label('First Name');
