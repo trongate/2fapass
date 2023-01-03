@@ -2,7 +2,17 @@
 class Item_pictures extends Trongate {
 
     private $default_limit = 20;
-    private $per_page_options = array(10, 20, 50, 100);    
+    private $per_page_options = array(10, 20, 50, 100);
+
+    function _get_all_item_pictures() {
+        $rows = $this->model->get('id');
+        $rows = $this->_add_pic_paths($rows);
+        $all_item_pictures = [];
+        foreach ($rows as $row) {
+            $all_item_pictures[$row->id] = $row;
+        }
+        return $all_item_pictures;
+    }    
 
     function create() {
         $this->module('trongate_security');

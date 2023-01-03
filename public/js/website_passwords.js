@@ -3,7 +3,6 @@ let items;
 
 function fetchWebsiteRecords() {
   targetUrl = baseUrl + 'api/get/website_records';
-  console.log(targetUrl);
   const http = new XMLHttpRequest();
   http.open('get', targetUrl);
   http.setRequestHeader('Content-type', 'application/json');
@@ -170,8 +169,6 @@ function openPasswordModal() {
 }
 
 function submitForm(submitBtn, formData) {
-  console.log('submitting form now');
-
   // Show the spinner
   submitBtn.innerHTML = '<div class="custom-spinner"></div>';
   submitBtn.disabled = true;
@@ -192,14 +189,11 @@ function submitForm(submitBtn, formData) {
   const http = new XMLHttpRequest();
   http.open('post', targetUrl);
   http.setRequestHeader('Content-type', 'application/json');
-  console.log(JSON.stringify(formData));
 
   http.send(JSON.stringify(formData));
   http.onload = function() {
 
     if (http.status == 200) {
-      console.log(http.responseText);
-
       // Revert the button to its original state
       submitBtn.innerHTML = 'Save';
       submitBtn.disabled = false;

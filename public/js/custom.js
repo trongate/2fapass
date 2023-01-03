@@ -112,7 +112,6 @@ function createOverlay(element) {
 }
 
 function drawBigTick(targetParentEl) {
-  console.log('drawing big tick')
   targetParentEl.classList.add('text-center');
   var bigTick = document.createElement('div');
   bigTick.setAttribute('id', 'big-tick');

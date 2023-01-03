@@ -51,29 +51,42 @@ class Website_records extends Trongate {
         $response_body = $output['body'];
         $rows = json_decode($response_body);
 
+        $this->module('item_pictures');
+        $all_item_pictures = $this->item_pictures->_get_all_item_pictures();
+
         foreach($rows as &$row) {
-            $additional_row_data = $this->_add_pic_path($row);
+            $additional_row_data = $this->_add_pic_path($row, $all_item_pictures);
             $row = array_merge((array) $row, $additional_row_data);
+        }
+
+        //replace potentially poorly written website names with nicely written entity names
+        foreach($rows as $key => $value) {
+            if($value['entity_name'] !== '') {
+                $rows[$key]['website_name'] = $value['entity_name'];
+            }
         }
 
         $output['body'] = json_encode($rows);
         return $output;
     }   
 
-    function _add_pic_path($record_obj) {
-        $picture = $record_obj->picture ?? '';
+    function _add_pic_path($record_obj, $all_item_pictures) {
+
+        $picture_id = $record_obj->picture_id ?? 0;
         $record_id = $record_obj->id ?? 0;
 
-        if($picture !== '') {
-            $pic_path = BASE_URL.'website_records_module/website_records_pics/';
-            $pic_path.= $record_id.'/'.$record_obj->picture;
+        if($picture_id>0) {
+            $pic_path = $all_item_pictures[$picture_id]->pic_path;
+            $entity_name = $all_item_pictures[$picture_id]->entity_name;
         } else {
             $pic_path = '';
             $rand_index = rand(0, count(MATCHING_COLORS)-1);
             $additional_row_data['cell_background'] = MATCHING_COLORS[$rand_index];
+            $entity_name = '';
         }
 
         $additional_row_data['pic_path'] = $pic_path;
+        $additional_row_data['entity_name'] = $entity_name;
         return $additional_row_data;
     }
 

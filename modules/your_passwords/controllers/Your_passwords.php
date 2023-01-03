@@ -41,10 +41,9 @@ class Your_passwords extends Trongate {
 
     function _add_full_pic_paths($rows) {
         foreach($rows as $key => $value) {
-
-            if($value->picture !== '') {
+            if($value->picture_id>0) {
                 $rows[$key]->pic_path = BASE_URL.'website_records_module/website_records_pics/';
-                $rows[$key]->pic_path.= $value->id.'/'.$value->picture;
+                $rows[$key]->pic_path.= $value->id.'/'.$value->picture_id;
             } else {
                 $rows[$key]->pic_path = '';
                 $rand_index = rand(0, count(MATCHING_COLORS)-1);
