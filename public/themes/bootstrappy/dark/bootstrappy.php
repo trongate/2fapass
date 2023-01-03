@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="<?= BASE_URL ?>css/admin-slide-nav.css">
     <link rel="stylesheet" href="<?= THEME_DIR ?>css/bootstrappy.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>css/custom.css">
-	<title>Bootstrappy</title>
+	<title><?= OUR_NAME ?></title>
 </head>
 <body>
 <script>
@@ -29,9 +29,9 @@ const baseUrl = '<?= BASE_URL ?>';
 		<i class="fa fa-user"></i><span id="admin-down-arrow">▼</span></div>
 		<div id="admin-settings-dropdown">
 			<ul>
-				<li><?= anchor('trongate_administrators/create/1', '<i class=\'fa fa-shield\'></i> Update Your Details ') ?></li>
-				<li><?= anchor('trongate_administrators/manage', '<i class=\'fa fa-users\'></i> Manage Admin Users ') ?></li>
-				<li class="top-border"><?= anchor('trongate_administrators/logout', '<i class=\'fa fa-sign-out\'></i> Logout ') ?></li>
+				<li><?= anchor('members-account/your_account', '<i class=\'fa fa-user\'></i> Your Account ') ?></li>
+				<li><?= anchor('members-account/update', '<i class=\'fa fa-pencil\'></i> Update Your Details ') ?></li>
+				<li class="top-border"><?= anchor('members/logout', '<i class=\'fa fa-sign-out\'></i> Logout ') ?></li>
 			</ul>
 		</div>
 		<div id="hamburger" class="hide-lg" onclick="openSlideNav()">&#9776;</div>

@@ -1,7 +1,7 @@
 <?php
 class Account extends Trongate {
 
-    private $template_to_use = 'public';
+    private $template_to_use = 'bootstrappy';
 
     function __construct() {
         parent::__construct();
