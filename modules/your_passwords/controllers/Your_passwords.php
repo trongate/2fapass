@@ -2,6 +2,9 @@
 class Your_passwords extends Trongate {
 
     function ditch() {
+        if (ENV !== 'dev') {
+            die();
+        }
         $sql = 'delete from website_records where id>7';
         $this->model->query($sql);
 
@@ -20,6 +23,12 @@ class Your_passwords extends Trongate {
         $this->module('members');
         $member_obj = $this->members->_get_member_obj($token);
         $data['items'] = $this->_fetch_items($member_obj->id);
+
+        //$additional_includes_top[] = BASE_URL.'trongate_filezone_module/css/trongate-filezone.css';
+        //$data['additional_includes_top'] = $additional_includes_top;
+        $additional_includes_btm[] = BASE_URL.'js/website_passwords.js';
+        $data['additional_includes_btm'] = $additional_includes_btm;
+
         $data['view_file'] = 'your_passwords';
         $this->template('bootstrappy', $data);
     }
@@ -27,11 +36,6 @@ class Your_passwords extends Trongate {
     function _fetch_items($member_id) {
         $rows = $this->model->get_many_where('members_id', $member_id, 'website_records');
         $rows = $this->_add_full_pic_paths($rows);
-// $more_rows = $rows;
-// for ($i=0; $i < 4; $i++) { 
-//     $rows = array_merge($rows, $more_rows);
-// }
-
         return $rows;
     }
 

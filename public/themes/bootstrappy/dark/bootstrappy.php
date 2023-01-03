@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="<?= BASE_URL ?>css/admin-slide-nav.css">
     <link rel="stylesheet" href="<?= THEME_DIR ?>css/bootstrappy.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>css/custom.css">
+    <?= $additional_includes_top ?>
 	<title><?= OUR_NAME ?></title>
 </head>
 <body>
@@ -63,5 +64,6 @@ const baseUrl = '<?= BASE_URL ?>';
 <script src="<?= BASE_URL ?>js/admin.js"></script>
 <script src="<?= THEME_DIR ?>js/bootstrappy.js"></script>
 <script src="<?= BASE_URL ?>js/trongate-datetime.js"></script>
+<?= $additional_includes_btm ?>
 </body>
 </html>

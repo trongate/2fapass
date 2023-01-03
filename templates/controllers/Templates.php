@@ -2,6 +2,19 @@
 class Templates extends Trongate {
 
     function bootstrappy($data) {
+
+        if (isset($data['additional_includes_top'])) {
+            $data['additional_includes_top'] = $this->_build_additional_includes($data['additional_includes_top']);
+        } else {
+            $data['additional_includes_top'] = '';
+        }
+
+        if (isset($data['additional_includes_btm'])) {
+            $data['additional_includes_btm'] = $this->_build_additional_includes($data['additional_includes_btm']);
+        } else {
+            $data['additional_includes_btm'] = '';
+        }
+
         load('bootstrappy', $data);
     }
 
