@@ -64,6 +64,12 @@ const baseUrl = '<?= BASE_URL ?>';
 <script src="<?= BASE_URL ?>js/admin.js"></script>
 <script src="<?= THEME_DIR ?>js/bootstrappy.js"></script>
 <script src="<?= BASE_URL ?>js/trongate-datetime.js"></script>
+<script src="<?= BASE_URL ?>js/custom.js"></script>
 <?= $additional_includes_btm ?>
+<?php
+if (ENV == 'dev') {
+    echo '<script src="'.BASE_URL.'js/dev.js"></script>';
+}
+?>
 </body>
 </html>
