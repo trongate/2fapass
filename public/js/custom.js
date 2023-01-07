@@ -260,3 +260,14 @@ function openCustomModal(itemType, recordCode = '') {
 
   openModal(itemType, recordCode);
 }
+
+function populateFolderDropdown(selectedFolderId='') {
+   const folderDropdown = document.getElementById('folder-dropdown');
+
+   for (var i = 0; i < allFolders.length; i++) {
+     const newSelectOption = document.createElement('option');
+     newSelectOption.setAttribute('value', allFolders[i]['id']);
+     newSelectOption.innerHTML = allFolders[i]['folder_name'];
+     folderDropdown.appendChild(newSelectOption);
+   }
+}

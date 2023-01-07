@@ -4,6 +4,26 @@ class Item_pictures extends Trongate {
     private $default_limit = 20;
     private $per_page_options = array(10, 20, 50, 100);
 
+    function _est_picture_id($website_url) {
+
+        $picture_id = 0;
+
+        //does this URL contain a URL identifier str from item_pictures tbl?
+        $rows = $this->model->get('id', 'item_pictures');
+        foreach($rows as $row) {
+            $url_identifier_string = $row->url_identifier_string;
+            
+
+            //is this URL id str is the submitted website URL?
+            if(is_numeric(strpos($website_url, $url_identifier_string))) {
+                $picture_id = $row->id;
+                return $picture_id;
+            }
+        }
+
+        return $picture_id;
+    }
+
     function _get_all_item_pictures() {
         $rows = $this->model->get('id');
         $rows = $this->_add_pic_paths($rows);

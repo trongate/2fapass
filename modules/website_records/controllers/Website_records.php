@@ -15,10 +15,13 @@ class Website_records extends Trongate {
     }
 
     function _pre_insert_actions($input) {
+
+
         $posted_params = $input['params'];
+
         $website_url = $posted_params['website-url'] ?? '';
         $website_name = $posted_params['website-name'] ?? '';
-        $folder = $posted_params['folder'] ?? '';
+        $folder_id = $posted_params['folder_id'] ?? 0;
         $username = $posted_params['username'] ?? '';
 
         //validate the submitted data (later)
@@ -27,10 +30,13 @@ class Website_records extends Trongate {
 
         $data['website_url'] = $website_url;
         $data['website_name'] = $website_name;
-        //$data['folder'] = $folder; (later)
+        $data['folder_id'] = (int) $folder_id;
         $data['username'] = $username;
         $data['members_id'] = 1;
-        $data['picture'] = '';
+
+        $this->module('item_pictures');
+        $data['picture_id'] = $this->item_pictures->_est_picture_id($data['website_url']);
+
         $input['params'] = $data;
         return $input;
     }
@@ -38,7 +44,9 @@ class Website_records extends Trongate {
     function _after_insert_actions($output) {
         $response_body = $output['body'];
         $record_obj = json_decode($response_body);
-        $additional_record_data = $this->_add_pic_path($record_obj);
+        $this->module('item_pictures');
+        $all_item_pictures = $this->item_pictures->_get_all_item_pictures();
+        $additional_record_data = $this->_add_pic_path($record_obj, $all_item_pictures);
         foreach ($additional_record_data as $key => $value) {
           $record_obj->$key = $value;
         }

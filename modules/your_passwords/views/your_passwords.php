@@ -23,7 +23,9 @@
                 </div>
                 <div>
                     <label>Folder:</label>
-                    <input type="text" id="folder" value="" placeholder="Select a folder...">
+                    <select id="folder-dropdown" name="folder">
+                    <option value="" selected="">Select folder...</option>
+                    </select>
                 </div>
             </div>
             <div class="two-col">

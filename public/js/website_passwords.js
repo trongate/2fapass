@@ -232,6 +232,7 @@ function readFormValues() {
   const form = document.querySelector('.password-form');
   const inputs = form.querySelectorAll('input');
   const textarea = form.querySelector('#notes');
+  const folderDropdown = form.querySelector('#folder-dropdown');
 
   const errors = [];
   const params = {};
@@ -289,6 +290,8 @@ function readFormValues() {
     params[textarea.id] = textarea.value;
   }
 
+  params['folder_id'] = folderDropdown.options[folderDropdown.selectedIndex].value
+
   const submittedPassword = document.getElementById('password').value;
   if (submittedPassword.length > 0) {
     checkPassword(submittedPassword);
@@ -327,6 +330,7 @@ function initUpdateItem(recordId) {
 
 window.addEventListener('load', (ev) => {
   fetchWebsiteRecords();
-  //devAutoOpenForm();
+  devAutoOpenForm();
+  populateFolderDropdown();
   //devAutoOpenFlashdata();
 });

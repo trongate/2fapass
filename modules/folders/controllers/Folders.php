@@ -4,6 +4,19 @@ class Folders extends Trongate {
     private $default_limit = 20;
     private $per_page_options = array(10, 20, 50, 100);    
 
+    function _get_all_folders() {
+        $all_folders = [];
+        $rows = $this->model->get('id', 'folders');
+        foreach($rows as $row) {
+            $update_id = $row->id;
+            $row_data['folder_name'] = $row->folder_name;
+            $row_data['url_string'] = $row->url_string;
+            $all_folders[$row->id] = $row_data;
+        }
+
+        return $all_folders;
+    }
+
     function create() {
         $this->module('trongate_security');
         $this->trongate_security->_make_sure_allowed();

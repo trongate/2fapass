@@ -24,8 +24,8 @@ class Your_passwords extends Trongate {
         $member_obj = $this->members->_get_member_obj($token);
         $data['items'] = $this->_fetch_items($member_obj->id);
 
-        //$additional_includes_top[] = BASE_URL.'trongate_filezone_module/css/trongate-filezone.css';
-        //$data['additional_includes_top'] = $additional_includes_top;
+        $this->module('folders');
+        $data['all_folders'] = $this->folders->_get_all_folders();
         $additional_includes_btm[] = BASE_URL.'js/website_passwords.js';
         $data['additional_includes_btm'] = $additional_includes_btm;
 

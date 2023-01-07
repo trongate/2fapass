@@ -61,6 +61,15 @@ const baseUrl = '<?= BASE_URL ?>';
     <div id="close-btn" onclick="closeSlideNav()">&times;</div>
     <ul auto-populate="true"></ul>
 </div>
+<script>
+const allFolders = [
+  { id: "1", folder_name: "Business", url_string: "business" },
+  { id: "2", folder_name: "Entertainment", url_string: "entertainment" },
+  { id: "3", folder_name: "Finance", url_string: "finance" },
+  { id: "4", folder_name: "Hosting", url_string: "hosting" },
+  { id: "5", folder_name: "Social Media", url_string: "social-media" }
+];
+</script>
 <script src="<?= BASE_URL ?>js/admin.js"></script>
 <script src="<?= THEME_DIR ?>js/bootstrappy.js"></script>
 <script src="<?= BASE_URL ?>js/trongate-datetime.js"></script>
